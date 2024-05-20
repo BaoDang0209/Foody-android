@@ -26,7 +26,7 @@
             android:fontFamily="monospace"
             android:gravity="center"
             android:paddingTop="8dp"
-            android:text="Explore latest hits only on this App"
+            android:text="Register to access Application"
             android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -71,12 +71,12 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Confirm Password"
+            android:hint="User Name"
             android:textColorHint="@color/black"
             android:padding="16dp"
             android:inputType="textPassword"
             android:background="@drawable/rounded_corner"
-            android:id="@+id/confirm_password_edittext"/>
+            android:id="@+id/username_edittext"/>
 
         <View
             android:layout_width="match_parent"
