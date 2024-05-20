@@ -78,7 +78,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="8dp"
-        android:text="List Restaurent"
+        android:text="List food"
         android:textColor="@color/blue_grey"
         android:textSize="18sp"
         android:textStyle="bold"
