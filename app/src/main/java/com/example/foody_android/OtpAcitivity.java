@@ -80,14 +80,11 @@ public class OtpAcitivity extends AppCompatActivity {
                 if (response.code() ==200 ) {
                     LoginResult result = response.body();
                     AlertDialog.Builder builder = new AlertDialog.Builder(OtpAcitivity.this);
-                    builder
-                            .setPositiveButton("OK", (dialog, which) -> {
                                 // Redirect to ShipperPanelBottomNavigationActivity
                                 Intent intent = new Intent(OtpAcitivity.this, LoginActivity.class);
                                 startActivity(intent);
                                 finish();  // Optional: finish the current activity
-                            })
-                            .show();
+
                     // Save user session here if needed
                 } else if (response.code() == 401) {
                     Toast.makeText(OtpAcitivity.this, "Wrong Credentials", Toast.LENGTH_LONG).show();
