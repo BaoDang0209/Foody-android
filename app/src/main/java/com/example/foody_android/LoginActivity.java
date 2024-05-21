@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private static final String BASE_URL = "http://192.168.1.4:3001/";
+    private static final String BASE_URL = "http://10.0.2.2:3001/";
 
     private Button btnLogin;
 
@@ -85,15 +85,11 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResult result = response.body();
                     AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                    builder.setTitle("Welcome " + result.getUsername())
-                            .setMessage("Email: " + result.getEmail())
-                            .setPositiveButton("OK", (dialog, which) -> {
                                 // Redirect to ShipperPanelBottomNavigationActivity
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();  // Optional: finish the current activity
-                            })
-                            .show();
+
                     // Save user session here if needed
                 } else if (response.code() == 401) {
                     Toast.makeText(LoginActivity.this, "Wrong Credentials", Toast.LENGTH_LONG).show();
