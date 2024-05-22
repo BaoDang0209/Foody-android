@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.foody_android.callAPI.RetrofitInterface;
@@ -24,8 +25,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class OtpAcitivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private static final String BASE_URL = "http://10.0.2.2:3001/";
+    private static final String BASE_URL = "http://192.168.1.3:3001/";
+    //private static final String BASE_URL = "http://10.0.2.2:3001/";
     private Button btnVerify;
+
+    private TextView reSend;
     private EditText[] otpFields = new EditText[6];
 
     @Override
@@ -43,6 +47,8 @@ public class OtpAcitivity extends AppCompatActivity {
 
         btnVerify = findViewById(R.id.buttonVerify);
 
+        reSend = findViewById(R.id.textResendOTP);
+
         String email = getIntent().getStringExtra("email");
 
         retrofit = new Retrofit.Builder()
@@ -52,6 +58,8 @@ public class OtpAcitivity extends AppCompatActivity {
 
         retrofitInterface = retrofit.create(RetrofitInterface.class);
         btnVerify.setOnClickListener(v -> handleVerify(email)); // Pass email to handleVerify()
+
+        reSend.setOnClickListener(v -> handleResendOtp(email)); //reSend email to handleResendOtp()
     }
 
     private void handleVerify(String email) {
@@ -90,6 +98,30 @@ public class OtpAcitivity extends AppCompatActivity {
                     Toast.makeText(OtpAcitivity.this, "Wrong Credentials", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(OtpAcitivity.this, "OTP invalid, please try again.", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResult> call, Throwable t) {
+                Toast.makeText(OtpAcitivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+
+        });
+    }
+    private void handleResendOtp(String email) {
+        // Prepare the request body (map) for API call
+        HashMap<String, String> map = new HashMap<>();
+        map.put("email", email);
+
+        Call<LoginResult> call = retrofitInterface.sendOTP(map);
+
+        call.enqueue(new Callback<LoginResult>() {
+            @Override
+            public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(OtpAcitivity.this, "OTP resent successfully", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(OtpAcitivity.this, "Failed to resend OTP, please try again.", Toast.LENGTH_LONG).show();
                 }
             }
 

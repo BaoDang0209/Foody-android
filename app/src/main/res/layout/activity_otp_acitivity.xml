@@ -60,7 +60,7 @@
             <EditText
                 android:id="@+id/inputCode1"
                 android:layout_width="40dp"
-                android:layout_height="44dp"
+                android:layout_height="60dp"
                 android:gravity="center"
                 android:imeOptions="actionNext"
                 android:importantForAutofill="no"
@@ -72,7 +72,7 @@
             <EditText
                 android:id="@+id/inputCode2"
                 android:layout_width="40dp"
-                android:layout_height="44dp"
+                android:layout_height="60dp"
                 android:layout_marginStart="4dp"
                 android:gravity="center"
                 android:imeOptions="actionNext"
@@ -85,7 +85,7 @@
             <EditText
                 android:id="@+id/inputCode3"
                 android:layout_width="40dp"
-                android:layout_height="44dp"
+                android:layout_height="60dp"
                 android:layout_marginStart="4dp"
                 android:gravity="center"
                 android:imeOptions="actionNext"
@@ -98,7 +98,7 @@
             <EditText
                 android:id="@+id/inputCode4"
                 android:layout_width="40dp"
-                android:layout_height="44dp"
+                android:layout_height="60dp"
                 android:layout_marginStart="4dp"
                 android:gravity="center"
                 android:imeOptions="actionNext"
@@ -111,7 +111,7 @@
             <EditText
                 android:id="@+id/inputCode5"
                 android:layout_width="40dp"
-                android:layout_height="44dp"
+                android:layout_height="60dp"
                 android:layout_marginStart="4dp"
                 android:gravity="center"
                 android:imeOptions="actionNext"
@@ -124,7 +124,7 @@
             <EditText
                 android:id="@+id/inputCode6"
                 android:layout_width="40dp"
-                android:layout_height="44dp"
+                android:layout_height="60dp"
                 android:layout_marginStart="4dp"
                 android:gravity="center"
                 android:imeOptions="actionNext"

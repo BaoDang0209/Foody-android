@@ -14,4 +14,7 @@ public interface RetrofitInterface {
     Call<LoginResult> executeSignup (@Body HashMap<String, String> map);
     @POST("/api/user/otp/verify-otp")
     Call<LoginResult> verifyOtp(@Body HashMap<String, String> map);
+
+    @POST("/api/user/otp/send-otp")
+    Call<LoginResult> sendOTP(@Body HashMap<String, String> map);
 }
