@@ -40,5 +40,9 @@ public interface RetrofitInterface {
 
     @GET("/api/menu_items/getbyrestaurant/{restaurantId}")
     Call<List<Food>> getFoodsByRestaurant(@Path("restaurantId") int restaurantId);
+
+    @GET("api/menu_items/getall")
+    Call<List<Food>> getAllFoodItems();
+
 }
 

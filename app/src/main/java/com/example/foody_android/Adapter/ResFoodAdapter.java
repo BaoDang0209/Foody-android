@@ -37,8 +37,8 @@ public class ResFoodAdapter extends RecyclerView.Adapter<ResFoodAdapter.ResFoodV
         holder.foodNameTxt.setText(foodItem.getItemName());
 
         // Assuming price is a string, if it is a number, it should be formatted as needed
-        String formattedPrice = String.format("$%.2f", Double.parseDouble(foodItem.getPrice()));
-        holder.priceTxt.setText(formattedPrice);
+        String formattedPrice = String.format("%.2f", Double.parseDouble(foodItem.getPrice()));
+        holder.priceTxt.setText(formattedPrice +" đ");
 
         // Set other views if needed
     }

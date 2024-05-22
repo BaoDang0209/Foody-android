@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="110dp"
+    android:layout_width="200dp"
+    android:layout_height="250dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="15dp"
     app:cardElevation="3dp"
@@ -13,31 +13,32 @@
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="200dp"
+        android:layout_height="250dp">
 
         <ImageView
             android:id="@+id/pic"
-            android:layout_width="123dp"
-            android:layout_height="96dp"
+            android:layout_width="178dp"
+            android:layout_height="104dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/titleTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:text="Title"
-            android:textSize="16sp"
             android:textColor="@color/blue_grey"
+            android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/pic"
-            app:layout_constraintTop_toTopOf="@+id/pic" />
+            app:layout_constraintStart_toStartOf="@+id/pic"
+            app:layout_constraintTop_toBottomOf="@+id/pic" />
 
         <TextView
             android:id="@+id/reskindTxt"
@@ -45,8 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="kind"
-            android:textSize="16sp"
             android:textColor="@color/blue_grey"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/titleTxt"
             app:layout_constraintTop_toBottomOf="@+id/titleTxt" />
 
@@ -54,13 +55,12 @@
             android:id="@+id/addressTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="Address"
             android:textColor="@color/blue_grey"
-            android:layout_marginTop="8dp"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/reskindTxt"
             app:layout_constraintTop_toBottomOf="@+id/reskindTxt" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.cardview.widget.CardView>
