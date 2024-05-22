@@ -3,6 +3,7 @@ package com.example.foody_android;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -85,11 +86,18 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResult result = response.body();
+
+                    String authToken = result.getToken();
+                    Log.d("AuthToken", authToken);
+
+                    // Lưu authToken vào SharedPreferences
+                    SharedPreferencesManager.getInstance(LoginActivity.this).saveAuthToken(authToken);
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                                // Redirect to ShipperPanelBottomNavigationActivity
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+
+                                Intent intent = new Intent(LoginActivity.this, UserInformation.class);
                                 startActivity(intent);
-                                finish();  // Optional: finish the current activity
+                                finish();
 
                     // Save user session here if needed
                 } else if (response.code() == 401) {
