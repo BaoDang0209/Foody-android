@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Ho va ten"
+            android:text="User Information"
             android:textColor="@color/blue_grey"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -52,15 +52,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="First Name:"
+            android:text="Full Name:"
             android:textStyle="bold"
             android:textColor="@color/blue_grey"
             android:textSize="18dp"
             android:layout_marginLeft="5dp" />
-        <TextView
+        <EditText
+            android:id="@+id/full_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ho"
+            android:hint="Enter your full name"
+            android:textColorHint="@color/Silver"
             android:layout_marginLeft="25dp"
             android:textSize="18dp"
             android:textColor="@color/blue_grey"/>
@@ -88,19 +90,22 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@drawable/ic_person"/>
+            android:src="@drawable/ic_phone"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Last Name:"
+            android:text="Phone"
             android:textStyle="bold"
             android:textColor="@color/blue_grey"
             android:textSize="18dp"
             android:layout_marginLeft="5dp" />
-        <TextView
+        <EditText
+            android:id="@+id/phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ho"
+            android:hint="Enter your phone number"
+            android:inputType="number"
+            android:textColorHint="@color/Silver"
             android:layout_marginLeft="25dp"
             android:textSize="18dp"
             android:textColor="@color/blue_grey"/>
@@ -136,10 +141,13 @@
             android:textColor="@color/blue_grey"
             android:textSize="18dp"
             android:layout_marginLeft="5dp" />
-        <TextView
+        <EditText
+            android:id="@+id/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ho"
+            android:hint="Enter your email"
+            android:inputType="textEmailAddress"
+            android:textColorHint="@color/Silver"
             android:layout_marginLeft="25dp"
             android:textSize="18dp"
             android:textColor="@color/blue_grey"/>
@@ -168,15 +176,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="First Name:"
+            android:text="UserName:"
             android:textStyle="bold"
             android:textColor="@color/blue_grey"
             android:textSize="18dp"
             android:layout_marginLeft="5dp" />
-        <TextView
+        <EditText
+            android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ho"
+            android:hint="Enter your username"
+            android:textColorHint="@color/Silver"
             android:layout_marginLeft="25dp"
             android:textSize="18dp"
             android:textColor="@color/blue_grey"/>

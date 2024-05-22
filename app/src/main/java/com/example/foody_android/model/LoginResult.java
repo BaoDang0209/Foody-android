@@ -7,6 +7,11 @@ public class LoginResult {
     private String username;
     private String email;
     private String password;
+    private  int phone;
+    private String fullname;
+
+    private  String accessToken;
+
     private int otp;
 
     public String getUsername() {
@@ -38,5 +43,37 @@ public class LoginResult {
 
     public void setOtp(int otp) {
         this.otp = otp;
+    }
+
+    public String getToken() {
+        return accessToken;
+    }
+
+    public void setToken(String token) {
+        this.accessToken = token;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 }

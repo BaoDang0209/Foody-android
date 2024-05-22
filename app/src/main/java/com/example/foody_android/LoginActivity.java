@@ -3,6 +3,7 @@ package com.example.foody_android;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private static final String BASE_URL = "http://192.168.15.43:3001/";
+    private static final String BASE_URL = "http://192.168.1.3:3001/";
     //private static final String BASE_URL = "http://10.0.2.2:3001/";
 
     private Button btnLogin;
@@ -55,9 +56,12 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin.setOnClickListener(v -> handleLogin());
 
-        gotoSignUp.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-            startActivity(intent);
+        gotoSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
         });
     }
 
@@ -82,11 +86,18 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResult result = response.body();
+
+                    String authToken = result.getToken();
+                    Log.d("AuthToken", authToken);
+
+                    // Lưu authToken vào SharedPreferences
+                    SharedPreferencesManager.getInstance(LoginActivity.this).saveAuthToken(authToken);
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                                // Redirect to ShipperPanelBottomNavigationActivity
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+
+                                Intent intent = new Intent(LoginActivity.this, UserInformation.class);
                                 startActivity(intent);
-                                finish();  // Optional: finish the current activity
+                                finish();
 
                     // Save user session here if needed
                 } else if (response.code() == 401) {
