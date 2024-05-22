@@ -2,11 +2,9 @@ package com.example.foody_android;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.foody_android.callAPI.RetrofitInterface;
@@ -16,6 +14,7 @@ import android.widget.Button;
 
 
 import java.util.HashMap;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,7 +27,7 @@ public class SignUpActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
     private static final String BASE_URL = "http://192.168.1.3:3001/";
-/*    private static final String BASE_URL = "http://10.0.2.2:3001/";*/
+    //private static final String BASE_URL = "http://10.0.2.2:3001/";
 
     private Button btnSignUp;
 
@@ -69,25 +68,25 @@ public class SignUpActivity extends AppCompatActivity {
         String password = inputPassword.getText().toString().trim();
         String username = inputUserName.getText().toString().trim();
 
-        if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(SignUpActivity.this, "Please fill in both fields", Toast.LENGTH_LONG).show();
+        if (email.isEmpty() || password.isEmpty() || username.isEmpty()) {
+            Toast.makeText(SignUpActivity.this, "Please fill in all fields", Toast.LENGTH_LONG).show();
             return;
         }
 
         HashMap<String, String> map = new HashMap<>();
         map.put("email", email);
         map.put("password", password);
-        map.put("username",username);
+        map.put("username", username);
 
         Call<LoginResult> call = retrofitInterface.executeSignup(map);
+
 
         call.enqueue(new Callback<LoginResult>() {
             @Override
             public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    LoginResult result = response.body();
+                if (response.code() == 200 ) {
                     // Start VerifyOtpActivity and pass email as an extra
-                    Intent intent = new Intent(SignUpActivity.this,OtpAcitivity.class);
+                    Intent intent = new Intent(SignUpActivity.this, OtpAcitivity.class);
                     intent.putExtra("email", email); // Pass email as an extra
                     startActivity(intent);
                 } else {
