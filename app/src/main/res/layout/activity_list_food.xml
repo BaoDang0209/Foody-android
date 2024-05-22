@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListFoodActivity">
+    tools:context=".Activity.ListFoodActivity">
     <ScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
@@ -37,8 +37,8 @@
                     android:id="@+id/titleTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="title"
-                    android:textColor="@color/blue_grey"
+                    android:text="Food"
+                    android:textColor="@color/red"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -56,6 +56,7 @@
                     android:id="@+id/foodListView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

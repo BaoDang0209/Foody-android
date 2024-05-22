@@ -1,4 +1,4 @@
-package com.example.foody_android;
+package com.example.foody_android.Activity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.foody_android.R;
 import com.example.foody_android.callAPI.RetrofitInterface;
 import com.example.foody_android.model.LoginResult;
 

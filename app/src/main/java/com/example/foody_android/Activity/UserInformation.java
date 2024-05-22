@@ -1,4 +1,4 @@
-package com.example.foody_android;
+package com.example.foody_android.Activity;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -6,15 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.foody_android.R;
 import com.example.foody_android.callAPI.RetrofitInterface;
 import com.example.foody_android.model.LoginResult;
 import com.example.foody_android.model.User;
-import com.google.android.material.textfield.TextInputLayout;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserInformation extends Fragment {
     private RetrofitInterface retrofitInterface;
-    private static final String BASE_URL = "http://192.168.1.3:3001/";
+    private static final String BASE_URL = "http://192.168.15.43:3001/";
 
     private String authToken;
 

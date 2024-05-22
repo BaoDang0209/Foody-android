@@ -1,5 +1,6 @@
 package com.example.foody_android.callAPI;
 
+import com.example.foody_android.model.Food;
 import com.example.foody_android.model.LoginResult;
 import com.example.foody_android.model.User;
 import com.example.foody_android.model.Restaurant;
@@ -14,6 +15,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 
 public interface RetrofitInterface {
@@ -35,5 +37,8 @@ public interface RetrofitInterface {
 
     @GET("/api/restaurants")
     Call<List<Restaurant>> getRestaurants(@QueryMap Map<String, String> options);
+
+    @GET("/api/menu_items/getbyrestaurant/{restaurantId}")
+    Call<List<Food>> getFoodsByRestaurant(@Path("restaurantId") int restaurantId);
 }
 

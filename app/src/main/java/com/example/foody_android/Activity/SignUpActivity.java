@@ -1,4 +1,4 @@
-package com.example.foody_android;
+package com.example.foody_android.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.foody_android.R;
 import com.example.foody_android.callAPI.RetrofitInterface;
 import com.example.foody_android.model.LoginResult;
 import android.widget.EditText;

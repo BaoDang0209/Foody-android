@@ -9,17 +9,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
-import com.example.foody_android.model.Restaurant;
 import com.example.foody_android.R;
+import com.example.foody_android.model.Restaurant;
 import java.util.List;
 
 public class ResAdapter extends RecyclerView.Adapter<ResAdapter.ResViewHolder> {
+
     private List<Restaurant> restaurantList;
     private Context context;
+    private OnRestaurantItemClickListener onRestaurantItemClickListener;
 
-    public ResAdapter(Context context, List<Restaurant> restaurantList) {
+    public interface OnRestaurantItemClickListener {
+        void onRestaurantItemClick(int restaurantId);
+    }
+
+    public ResAdapter(Context context, List<Restaurant> restaurantList, OnRestaurantItemClickListener onRestaurantItemClickListener) {
         this.context = context;
         this.restaurantList = restaurantList;
+        this.onRestaurantItemClickListener = onRestaurantItemClickListener;
     }
 
     @NonNull
@@ -34,28 +41,27 @@ public class ResAdapter extends RecyclerView.Adapter<ResAdapter.ResViewHolder> {
         Restaurant restaurant = restaurantList.get(position);
         holder.restaurantName.setText(restaurant.getName());
         holder.restaurantKind.setText(restaurant.getKind());
-        //holder.restaurantAddress.setText(restaurant.getAddressId());
-        //Glide.with(context).load(restaurant.getImageUrl()).into(holder.restaurantImage);
-    }
 
+        holder.itemView.setOnClickListener(v -> {
+            if (onRestaurantItemClickListener != null) {
+                onRestaurantItemClickListener.onRestaurantItemClick(restaurant.getId());
+            }
+        });
+    }
 
     @Override
     public int getItemCount() {
         return restaurantList.size();
     }
 
-    class ResViewHolder extends RecyclerView.ViewHolder {
+    static class ResViewHolder extends RecyclerView.ViewHolder {
         TextView restaurantName;
         TextView restaurantKind;
-        TextView restaurantAddress;
-        ImageView restaurantImage;
 
         public ResViewHolder(@NonNull View itemView) {
             super(itemView);
             restaurantName = itemView.findViewById(R.id.titleTxt);
             restaurantKind = itemView.findViewById(R.id.reskindTxt);
-            restaurantAddress = itemView.findViewById(R.id.addressTxt);
-            //restaurantImage = itemView.findViewById(R.id.pic);
         }
     }
 }

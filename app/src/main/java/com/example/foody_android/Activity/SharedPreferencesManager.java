@@ -1,4 +1,4 @@
-package com.example.foody_android;
+package com.example.foody_android.Activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;

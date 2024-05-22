@@ -1,31 +1,29 @@
-package com.example.foody_android;
+package com.example.foody_android.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.foody_android.Adapter.ResAdapter;
+import com.example.foody_android.R;
 import com.example.foody_android.model.Restaurant;
 import com.example.foody_android.callAPI.RetrofitInterface;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements ResAdapter.OnRestaurantItemClickListener {
 
     private RecyclerView recyclerView;
     private ResAdapter adapter;
@@ -84,8 +82,15 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupRecyclerView(List<Restaurant> restaurantList) {
-        adapter = new ResAdapter(getContext(), restaurantList);
+        adapter = new ResAdapter(getContext(), restaurantList, this);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onRestaurantItemClick(int restaurantId) {
+        Intent intent = new Intent(getActivity(), ListFoodActivity.class);
+        intent.putExtra("restaurant_id", restaurantId);
+        startActivity(intent);
     }
 
     private void showError(String message) {

@@ -16,22 +16,22 @@
         android:theme="@style/Theme.FoodyAndroid"
         tools:targetApi="31">
         <activity
-            android:name=".ListFoodActivity"
+            android:name=".Activity.ListFoodActivity"
             android:exported="false" />
         <activity
-            android:name=".OtpAcitivity"
+            android:name=".Activity.OtpAcitivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".Activity.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".UserInformation"
+            android:name=".Activity.UserInformation"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

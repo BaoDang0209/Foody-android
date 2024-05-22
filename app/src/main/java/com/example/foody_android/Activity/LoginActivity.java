@@ -1,4 +1,4 @@
-package com.example.foody_android;
+package com.example.foody_android.Activity;
 
 
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.foody_android.R;
 import com.example.foody_android.callAPI.RetrofitInterface;
 import com.example.foody_android.model.LoginResult;
 import android.widget.EditText;
@@ -30,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private static final String BASE_URL = "http://192.168.1.3:3001/";
+    private static final String BASE_URL = "http://192.168.15.43:3001/";
     //private static final String BASE_URL = "http://10.0.2.2:3001/";
 
     private Button btnLogin;
@@ -95,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
 
-                                Intent intent = new Intent(LoginActivity.this, UserInformation.class);
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
 

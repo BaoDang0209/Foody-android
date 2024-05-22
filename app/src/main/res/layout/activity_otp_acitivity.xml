@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:overScrollMode="never"
     android:scrollbars="none"
-    tools:context=".OtpAcitivity">
+    tools:context=".Activity.OtpAcitivity">
 
     <LinearLayout
         android:layout_width="match_parent"
