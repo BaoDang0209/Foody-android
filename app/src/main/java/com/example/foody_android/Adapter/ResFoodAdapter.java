@@ -40,6 +40,12 @@ public class ResFoodAdapter extends RecyclerView.Adapter<ResFoodAdapter.ResFoodV
         String formattedPrice = String.format("%.2f", Double.parseDouble(foodItem.getPrice()));
         holder.priceTxt.setText(formattedPrice +" đ");
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         // Set other views if needed
     }
 

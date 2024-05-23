@@ -10,53 +10,56 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.foody_android.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Load the default fragment
+        fragmentManager = getSupportFragmentManager();
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        // Set listener for item selection
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            Fragment selectedFragment = null;
+
+            switch (item.getItemId()) {
+                case R.id.home:
+                    selectedFragment = new HomeFragment();
+                    break;
+                case R.id.menu_chat:
+                    // Add your ChatFragment code here
+                    break;
+                case R.id.menu_noti:
+                    // Add your NotificationsFragment code here
+                    break;
+                case R.id.menu_profile:
+                    selectedFragment = new UserInformation();
+                    break;
+            }
+
+            if (selectedFragment != null) {
+                replaceFragment(selectedFragment);
+                return true;
+            }
+
+            return false;
+        });
+        // Set default fragment on first launch
         if (savedInstanceState == null) {
-            replaceFragment(new HomeFragment());
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_nav, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.home:
-                replaceFragment(new HomeFragment());
-                return true;
-            case R.id.menu_listOrder:
-                //replaceFragment(new ChatFragment());
-                return true;
-            case R.id.menu_staff:
-                //replaceFragment(new NotificationsFragment());
-                return true;
-            case R.id.menu_statistics:
-                //replaceFragment(new ProfileFragment());
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+            HomeFragment defaultFragment = new HomeFragment();
+            replaceFragment(defaultFragment);
         }
     }
 
     private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
-        fragmentTransaction.addToBackStack(null); // Optional: add transaction to back stack
-        fragmentTransaction.commit();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.commit();
     }
 }

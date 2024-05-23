@@ -5,15 +5,15 @@
         android:title="Home"
         android:icon="@drawable/home" />
     <item
-        android:id="@+id/menu_listOrder"
+        android:id="@+id/menu_chat"
         android:title="Chat"
         android:icon="@drawable/chat" />
     <item
-        android:id="@+id/menu_staff"
+        android:id="@+id/menu_noti"
         android:title="Notifications"
         android:icon="@drawable/notifications" />
     <item
-        android:id="@+id/menu_statistics"
+        android:id="@+id/menu_profile"
         android:title="Profile"
         android:icon="@drawable/profile" />
 </menu>

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.foody_android.Adapter.FoodAdapter;
 import com.example.foody_android.Adapter.ResAdapter;
 import com.example.foody_android.R;
+import com.example.foody_android.model.Address;
 import com.example.foody_android.model.Food;
 import com.example.foody_android.model.Restaurant;
 import com.example.foody_android.callAPI.RetrofitInterface;
@@ -36,7 +37,7 @@ public class HomeFragment extends Fragment implements ResAdapter.OnRestaurantIte
     private FoodAdapter foodAdapter;
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private static final String BASE_URL = "http://192.168.15.43:3001/";
+    private static final String BASE_URL = "http://192.168.1.5:3001/";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,7 +64,7 @@ public class HomeFragment extends Fragment implements ResAdapter.OnRestaurantIte
 
     private void fetchRestaurants() {
         Map<String, String> options = new HashMap<>();
-        options.put("key", "value"); // Replace with actual key-value pairs required by your API
+        options.put("key", "value"); // Thay thế bằng các cặp key-value thực tế yêu cầu bởi API của bạn
 
         Call<List<Restaurant>> call = retrofitInterface.getRestaurants(options);
 
@@ -73,6 +74,11 @@ public class HomeFragment extends Fragment implements ResAdapter.OnRestaurantIte
                 if (response.isSuccessful()) {
                     List<Restaurant> restaurantList = response.body();
                     if (restaurantList != null) {
+                        for (Restaurant restaurant : restaurantList) {
+                            // Lấy address_id từ mỗi nhà hàng và gọi API để lấy thông tin địa chỉ
+                            int addressId = restaurant.getAddressId();
+                            getAddressForRestaurant(addressId, restaurant);
+                        }
                         setupResRecyclerView(restaurantList);
                     } else {
                         showError("No data available");
@@ -88,6 +94,37 @@ public class HomeFragment extends Fragment implements ResAdapter.OnRestaurantIte
             public void onFailure(Call<List<Restaurant>> call, Throwable t) {
                 showError("An error occurred: " + t.getMessage());
                 Log.e("HomeFragment", "Network call failure", t);
+            }
+        });
+    }
+
+    private void getAddressForRestaurant(int addressId, Restaurant restaurant) {
+        Call<Address> call = retrofitInterface.getAddressId(addressId);
+
+        call.enqueue(new Callback<Address>() {
+            @Override
+            public void onResponse(Call<Address> call, Response<Address> response) {
+                if (response.isSuccessful()) {
+                    Address address = response.body();
+                    if (address != null) {
+                        // Tạo chuỗi địa chỉ từ các thuộc tính của đối tượng Address
+                        String fullAddress = address.getUnitNumber() + ", " +
+                                address.getStreetNumber() + ", " +
+                                address.getCity() + ", " +
+                                address.getRegion();
+                        // Cập nhật thông tin địa chỉ của nhà hàng dưới dạng chuỗi
+                        restaurant.setAddress(fullAddress);
+                        // Cập nhật RecyclerView sau khi lấy được địa chỉ
+                        resAdapter.notifyDataSetChanged();
+                    }
+                } else {
+                    // Xử lý khi không thành công
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Address> call, Throwable t) {
+                // Xử lý khi gặp lỗi
             }
         });
     }

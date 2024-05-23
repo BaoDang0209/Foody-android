@@ -1,5 +1,6 @@
 package com.example.foody_android.callAPI;
 
+import com.example.foody_android.model.Address;
 import com.example.foody_android.model.Food;
 import com.example.foody_android.model.LoginResult;
 import com.example.foody_android.model.User;
@@ -35,7 +36,7 @@ public interface RetrofitInterface {
     @GET("/api/test/user")
     Call<User> getUserProfile(@Header("Authorization") String authToken);
 
-    @GET("/api/restaurants")
+    @GET("/api/restaurants/getall")
     Call<List<Restaurant>> getRestaurants(@QueryMap Map<String, String> options);
 
     @GET("/api/menu_items/getbyrestaurant/{restaurantId}")
@@ -43,6 +44,9 @@ public interface RetrofitInterface {
 
     @GET("api/menu_items/getall")
     Call<List<Food>> getAllFoodItems();
+
+    @GET("/api/address/getaddressId/{addressId}")
+    Call<Address> getAddressId(@Path("addressId") int addressId);
 
 }
 

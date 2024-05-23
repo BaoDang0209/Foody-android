@@ -41,7 +41,7 @@ public class ResAdapter extends RecyclerView.Adapter<ResAdapter.ResViewHolder> {
         Restaurant restaurant = restaurantList.get(position);
         holder.restaurantName.setText(restaurant.getName());
         holder.restaurantKind.setText(restaurant.getKind());
-
+        holder.restaurantAddress.setText(restaurant.getAddress());
         holder.itemView.setOnClickListener(v -> {
             if (onRestaurantItemClickListener != null) {
                 onRestaurantItemClickListener.onRestaurantItemClick(restaurant.getId());
@@ -55,13 +55,14 @@ public class ResAdapter extends RecyclerView.Adapter<ResAdapter.ResViewHolder> {
     }
 
     static class ResViewHolder extends RecyclerView.ViewHolder {
-        TextView restaurantName;
-        TextView restaurantKind;
+        TextView restaurantName,restaurantKind,restaurantAddress;
 
         public ResViewHolder(@NonNull View itemView) {
             super(itemView);
             restaurantName = itemView.findViewById(R.id.titleTxt);
             restaurantKind = itemView.findViewById(R.id.reskindTxt);
+            restaurantAddress=itemView.findViewById(R.id.addressTxt);
+
         }
     }
 }
