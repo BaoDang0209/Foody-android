@@ -9,6 +9,16 @@ public class Restaurant {
 
     @SerializedName("restaurant_name")
     private String name;
+    @SerializedName("image")
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     @SerializedName("user_id")
     private Integer userId;

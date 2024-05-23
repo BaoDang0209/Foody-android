@@ -6,6 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -37,11 +40,16 @@ public class HomeFragment extends Fragment implements ResAdapter.OnRestaurantIte
     private FoodAdapter foodAdapter;
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
+
+    private String searchTxt;
+    private ImageView searchBtn;
     private static final String BASE_URL = "http://192.168.1.5:3001/";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        searchTxt=view.findViewById(R.id.searchtext).toString();
+        searchBtn=view.findViewById(R.id.searchBtn);
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -58,8 +66,14 @@ public class HomeFragment extends Fragment implements ResAdapter.OnRestaurantIte
 
         fetchRestaurants();
         fetchAllFoods();
-
+        searchBtn.setOnClickListener(v -> fetchSearch(searchTxt));
         return view;
+    }
+
+    private void fetchSearch(String searchTxt) {
+
+
+
     }
 
     private void fetchRestaurants() {

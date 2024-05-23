@@ -47,7 +47,10 @@ public class ResAdapter extends RecyclerView.Adapter<ResAdapter.ResViewHolder> {
                 onRestaurantItemClickListener.onRestaurantItemClick(restaurant.getId());
             }
         });
+        Glide.with(context).load(restaurant.getImage())
+                .fitCenter().into(holder.pic);
     }
+
 
     @Override
     public int getItemCount() {
@@ -56,12 +59,14 @@ public class ResAdapter extends RecyclerView.Adapter<ResAdapter.ResViewHolder> {
 
     static class ResViewHolder extends RecyclerView.ViewHolder {
         TextView restaurantName,restaurantKind,restaurantAddress;
+        ImageView pic;
 
         public ResViewHolder(@NonNull View itemView) {
             super(itemView);
             restaurantName = itemView.findViewById(R.id.titleTxt);
             restaurantKind = itemView.findViewById(R.id.reskindTxt);
             restaurantAddress=itemView.findViewById(R.id.addressTxt);
+            pic=itemView.findViewById(R.id.pic);
 
         }
     }
