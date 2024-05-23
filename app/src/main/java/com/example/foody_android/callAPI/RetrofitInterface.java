@@ -17,6 +17,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 public interface RetrofitInterface {
@@ -50,5 +51,9 @@ public interface RetrofitInterface {
 
     @GET("/api/menu_items/getbyid/{FOOD_ID}")
     Call<Food> getFoodByID(@Path("FOOD_ID") int id);
+
+    @GET("/api/restaurants/")
+    Call<Restaurant> getRestaurantById(@Query("id") int id);
+
 }
 

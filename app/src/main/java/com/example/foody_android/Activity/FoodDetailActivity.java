@@ -1,6 +1,7 @@
 package com.example.foody_android.Activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -8,9 +9,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import com.bumptech.glide.Glide;
 import com.example.foody_android.R;
 import com.example.foody_android.callAPI.RetrofitInterface;
+import com.example.foody_android.model.Address;
 import com.example.foody_android.model.Food;
+import com.example.foody_android.model.Restaurant;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,11 +25,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FoodDetailActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private static final String BASE_URL = "http://192.168.1.3:3001/";
+    private static final String BASE_URL = "http://192.168.1.5:3001/";
 
-    private TextView foodName, description, price, quality, total, minusBtn, plusBtn;
+    private TextView foodName, description, price, quality, total, minusBtn, plusBtn, resAddress;
     private AppCompatButton orderBTN;
     private ImageView backBTN;
+    private ImageView foodImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +44,8 @@ public class FoodDetailActivity extends AppCompatActivity {
         total = findViewById(R.id.totalTxt);
         minusBtn = findViewById(R.id.minusBtn);
         plusBtn = findViewById(R.id.plusBtn);
-
+        resAddress = findViewById(R.id.resAddress);
+        foodImg = findViewById(R.id.pic);
         orderBTN = findViewById(R.id.orderBtn);
         backBTN = findViewById(R.id.backBtn);
 
@@ -52,7 +58,6 @@ public class FoodDetailActivity extends AppCompatActivity {
 
         backBTN.setOnClickListener(v -> finish());
 
-        // Get the food ID passed from the previous activity
         int foodId = getIntent().getIntExtra("FOOD_ID", -1); // Default value -1 if not found
         if (foodId != -1) {
             fetchFoodDetails(foodId);
@@ -63,10 +68,7 @@ public class FoodDetailActivity extends AppCompatActivity {
 
         orderBTN.setOnClickListener(v -> handleOrder());
 
-        // Thiết lập sự kiện cho nút giảm số lượng
         minusBtn.setOnClickListener(v -> decreaseQuantity());
-
-        // Thiết lập sự kiện cho nút tăng số lượng
         plusBtn.setOnClickListener(v -> increaseQuantity());
     }
 
@@ -104,16 +106,69 @@ public class FoodDetailActivity extends AppCompatActivity {
                     description.setText(food.getDescription());
                     price.setText(String.valueOf(food.getPrice()));
                     total.setText(String.valueOf(food.getPrice()));
+                    Glide.with(FoodDetailActivity.this).load(food.getImage()).fitCenter().into(foodImg);
+                    int restaurantID = food.getRestaurantId();
+                    fetchAddressRestaurant(restaurantID);
                 } else {
-                    Toast.makeText(FoodDetailActivity.this, "Failed to retrieve food details", Toast.LENGTH_SHORT).show();
+                    showError("Failed to retrieve food details");
                 }
             }
 
             @Override
             public void onFailure(Call<Food> call, Throwable t) {
-                Toast.makeText(FoodDetailActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                showError("Error: " + t.getMessage());
             }
         });
+    }
+
+    private void fetchAddressRestaurant(int id) {
+        Call<Restaurant> call = retrofitInterface.getRestaurantById(id);
+        call.enqueue(new Callback<Restaurant>() {
+            @Override
+            public void onResponse(Call<Restaurant> call, Response<Restaurant> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Restaurant restaurant = response.body();
+                    int addressId = restaurant.getAddressId();
+                    getAddressForRestaurant(addressId);
+                } else {
+                    showError("Failed to retrieve restaurant details");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Restaurant> call, Throwable t) {
+                showError("Error: " + t.getMessage());
+            }
+        });
+    }
+
+    private void getAddressForRestaurant(int addressId) {
+        Call<Address> call = retrofitInterface.getAddressId(addressId);
+        call.enqueue(new Callback<Address>() {
+            @Override
+            public void onResponse(Call<Address> call, Response<Address> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Address address = response.body();
+                    String fullAddress = address.getUnitNumber() + ", " +
+                            address.getStreetNumber() + ", " +
+                            address.getCity() + ", " +
+                            address.getRegion();
+                    resAddress.setText(fullAddress);
+                } else {
+                    showError("Failed to retrieve address details");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Address> call, Throwable t) {
+                showError("Error: " + t.getMessage());
+            }
+        });
+    }
+
+    private void showError(String message) {
+        Toast.makeText(FoodDetailActivity.this, message, Toast.LENGTH_SHORT).show();
+        Log.e("FoodDetailActivity", message);
     }
 
     private void handleOrder() {

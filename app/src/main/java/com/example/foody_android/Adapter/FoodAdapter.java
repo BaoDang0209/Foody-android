@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.foody_android.Activity.FoodDetailActivity;
 import com.example.foody_android.R;
 import com.example.foody_android.model.Food;
@@ -48,12 +49,9 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
                 Intent intent = new Intent(context, FoodDetailActivity.class);
                 intent.putExtra("FOOD_ID", food.getId()); // Pass food ID as an integer extra
                 context.startActivity(intent);
-
             }
         });
-        // Assuming food.getImageUrl() returns the URL of the food image.
-        // Uncomment the line below if you have image URL
-        // Glide.with(context).load(food.getImageUrl()).into(holder.img);
+        Glide.with(context).load(food.getImage()).into(holder.img);
     }
 
     @Override

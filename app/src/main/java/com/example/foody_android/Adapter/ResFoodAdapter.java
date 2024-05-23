@@ -1,6 +1,7 @@
 package com.example.foody_android.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.foody_android.Activity.FoodDetailActivity;
 import com.example.foody_android.R;
 import com.example.foody_android.model.Food;
 
@@ -44,6 +46,10 @@ public class ResFoodAdapter extends RecyclerView.Adapter<ResFoodAdapter.ResFoodV
         holder.priceTxt.setText(formattedPrice +" đ");
 
         holder.itemView.setOnClickListener(v -> {
+            Context context = v.getContext();
+            Intent intent = new Intent(context, FoodDetailActivity.class);
+            intent.putExtra("FOOD_ID", foodItem.getId());
+            context.startActivity(intent);
 
         });
         Glide.with(context).load(foodItem.getImage())
