@@ -39,6 +39,12 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         // Assuming price is a string, if it is a number, it should be formatted as needed
         String formattedPrice = String.format("%.2f", Double.parseDouble(food.getPrice()));
         holder.priceTxt.setText(formattedPrice+" đ");
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         // Assuming food.getImageUrl() returns the URL of the food image.
         // Uncomment the line below if you have image URL
         // Glide.with(context).load(food.getImageUrl()).into(holder.img);

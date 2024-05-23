@@ -24,6 +24,15 @@ public class Restaurant {
 
     @SerializedName("updatedAt")
     private String updatedAt;
+    private String address;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     // Getters and Setters (if needed)
     public int getId() {

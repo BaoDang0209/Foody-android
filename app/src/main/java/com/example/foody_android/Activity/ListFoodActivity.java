@@ -22,7 +22,7 @@ public class ListFoodActivity extends AppCompatActivity {
     private ResFoodAdapter adapter;
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private static final String BASE_URL = "http://192.168.15.43:3001/";
+    private static final String BASE_URL = "http://192.168.1.5:3001/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
