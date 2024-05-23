@@ -15,6 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodyAndroid"
         tools:targetApi="31">
+
+        <activity
+            android:name=".Activity.FoodDetailActivity"
+            android:exported="false" />
         <activity
             android:name=".Activity.ListFoodActivity"
             android:exported="false" />
