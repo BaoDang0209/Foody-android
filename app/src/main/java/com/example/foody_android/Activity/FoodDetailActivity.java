@@ -23,7 +23,7 @@ public class FoodDetailActivity extends AppCompatActivity {
     private RetrofitInterface retrofitInterface;
     private static final String BASE_URL = "http://192.168.1.3:3001/";
 
-    private TextView foodName, description, price;
+    private TextView foodName, description, price, quality, total, minusBtn, plusBtn;
     private AppCompatButton orderBTN;
     private ImageView backBTN;
 
@@ -35,6 +35,10 @@ public class FoodDetailActivity extends AppCompatActivity {
         foodName = findViewById(R.id.food_name);
         description = findViewById(R.id.descriptionTxt);
         price = findViewById(R.id.priceTxt);
+        quality = findViewById(R.id.numTxt);
+        total = findViewById(R.id.totalTxt);
+        minusBtn = findViewById(R.id.minusBtn);
+        plusBtn = findViewById(R.id.plusBtn);
 
         orderBTN = findViewById(R.id.orderBtn);
         backBTN = findViewById(R.id.backBtn);
@@ -58,6 +62,35 @@ public class FoodDetailActivity extends AppCompatActivity {
         }
 
         orderBTN.setOnClickListener(v -> handleOrder());
+
+        // Thiết lập sự kiện cho nút giảm số lượng
+        minusBtn.setOnClickListener(v -> decreaseQuantity());
+
+        // Thiết lập sự kiện cho nút tăng số lượng
+        plusBtn.setOnClickListener(v -> increaseQuantity());
+    }
+
+    private void calculateAndUpdateTotal() {
+        double itemPrice = Double.parseDouble(price.getText().toString());
+        int itemQuality = Integer.parseInt(quality.getText().toString());
+        double totalValue = itemPrice * itemQuality;
+        total.setText(String.valueOf(totalValue));
+    }
+
+    private void decreaseQuantity() {
+        int currentQuality = Integer.parseInt(quality.getText().toString());
+        if (currentQuality > 1) {
+            currentQuality--;
+            quality.setText(String.valueOf(currentQuality));
+            calculateAndUpdateTotal();
+        }
+    }
+
+    private void increaseQuantity() {
+        int currentQuality = Integer.parseInt(quality.getText().toString());
+        currentQuality++;
+        quality.setText(String.valueOf(currentQuality));
+        calculateAndUpdateTotal();
     }
 
     private void fetchFoodDetails(int foodId) {
@@ -70,6 +103,7 @@ public class FoodDetailActivity extends AppCompatActivity {
                     foodName.setText(food.getItemName());
                     description.setText(food.getDescription());
                     price.setText(String.valueOf(food.getPrice()));
+                    total.setText(String.valueOf(food.getPrice()));
                 } else {
                     Toast.makeText(FoodDetailActivity.this, "Failed to retrieve food details", Toast.LENGTH_SHORT).show();
                 }
