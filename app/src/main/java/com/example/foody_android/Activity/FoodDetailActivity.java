@@ -16,13 +16,13 @@ import com.example.foody_android.R;
 import com.example.foody_android.callAPI.RetrofitInterface;
 import com.example.foody_android.model.Address;
 import com.example.foody_android.model.Food;
-<<<<<<< HEAD
+
 import com.example.foody_android.model.Order;
 
 import java.util.HashMap;
-=======
+
 import com.example.foody_android.model.Restaurant;
->>>>>>> 27c250827c59ac61c05d3dec7fbcecd4f5ef5fbe
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,8 +35,8 @@ public class FoodDetailActivity extends AppCompatActivity {
     private RetrofitInterface retrofitInterface;
     private static final String BASE_URL = "http://192.168.1.3:3001/";
     private static final String BASE_URL = "http://192.168.1.5:3001/";
-
-    private TextView foodName, description, price, quality, total, minusBtn, plusBtn;
+    // static final String BASE_URL = "http://192.168.1.5:3001/";
+    
     private TextView foodName, description, price, quality, total, minusBtn, plusBtn, resAddress;
     private AppCompatButton orderBTN;
     private ImageView backBTN;
