@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.foody_android.R;
 import com.example.foody_android.model.Food;
 
@@ -34,20 +35,18 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
+        int width = 100; // chiều rộng bạn muốn (đơn vị: px)
+        int height = 100;
         Food food = foodList.get(position);
         holder.titleTxt.setText(food.getItemName());
         // Assuming price is a string, if it is a number, it should be formatted as needed
         String formattedPrice = String.format("%.2f", Double.parseDouble(food.getPrice()));
         holder.priceTxt.setText(formattedPrice+" đ");
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.itemView.setOnClickListener(v -> {
 
-            }
         });
-        // Assuming food.getImageUrl() returns the URL of the food image.
-        // Uncomment the line below if you have image URL
-        // Glide.with(context).load(food.getImageUrl()).into(holder.img);
+        Glide.with(context).load(food.getImage())
+                .fitCenter().into(holder.img);
     }
 
     @Override
