@@ -41,7 +41,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
         Food food = foodList.get(position);
         holder.titleTxt.setText(food.getItemName());
-<<<<<<< HEAD
+
 
         try {
             double price = Double.parseDouble(food.getPrice());
@@ -64,7 +64,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         // Load image using Glide
         // Uncomment and update the line below if food.getImageUrl() returns the URL of the food image
         // Glide.with(holder.itemView.getContext()).load(food.getImageUrl()).into(holder.img);
-=======
         // Assuming price is a string, if it is a number, it should be formatted as needed
         String formattedPrice = String.format("%.2f", Double.parseDouble(food.getPrice()));
         holder.priceTxt.setText(formattedPrice+" đ");
@@ -77,7 +76,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         // Assuming food.getImageUrl() returns the URL of the food image.
         // Uncomment the line below if you have image URL
         // Glide.with(context).load(food.getImageUrl()).into(holder.img);
->>>>>>> 0f8c7c10af80bca50c29050c52b694784527e7dd
+
     }
 
 
