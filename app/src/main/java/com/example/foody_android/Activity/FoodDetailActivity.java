@@ -33,7 +33,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FoodDetailActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private static final String BASE_URL = "http://192.168.1.3:3001/";
+    //private static final String BASE_URL = "http://192.168.1.3:3001/";
     private static final String BASE_URL = "http://192.168.1.5:3001/";
     // static final String BASE_URL = "http://192.168.1.5:3001/";
     
@@ -216,11 +216,8 @@ public class FoodDetailActivity extends AppCompatActivity {
                 + "Quality: " + order.getQuality() + "\n"
                 + "Price: " + order.getPrice());
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss(); // Đóng dialog khi người dùng nhấn OK
-            }
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            dialog.dismiss(); // Đóng dialog khi người dùng nhấn OK
         });
 
         AlertDialog dialog = builder.create();
