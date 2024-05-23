@@ -4,11 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.foody_android.R;
 import com.example.foody_android.model.Food;
 
@@ -33,6 +35,7 @@ public class ResFoodAdapter extends RecyclerView.Adapter<ResFoodAdapter.ResFoodV
 
     @Override
     public void onBindViewHolder(@NonNull ResFoodViewHolder holder, int position) {
+
         Food foodItem = foodList.get(position);
         holder.foodNameTxt.setText(foodItem.getItemName());
 
@@ -40,13 +43,11 @@ public class ResFoodAdapter extends RecyclerView.Adapter<ResFoodAdapter.ResFoodV
         String formattedPrice = String.format("%.2f", Double.parseDouble(foodItem.getPrice()));
         holder.priceTxt.setText(formattedPrice +" đ");
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.itemView.setOnClickListener(v -> {
 
-            }
         });
-        // Set other views if needed
+        Glide.with(context).load(foodItem.getImage())
+                .fitCenter().into(holder.pic);
     }
 
     @Override
@@ -56,11 +57,13 @@ public class ResFoodAdapter extends RecyclerView.Adapter<ResFoodAdapter.ResFoodV
 
     static class ResFoodViewHolder extends RecyclerView.ViewHolder {
         TextView foodNameTxt, priceTxt;
+        ImageView pic;
 
         public ResFoodViewHolder(@NonNull View itemView) {
             super(itemView);
             foodNameTxt = itemView.findViewById(R.id.titleTxt);
             priceTxt = itemView.findViewById(R.id.priceTxt);
+            pic = itemView.findViewById(R.id.img);
         }
     }
 }
