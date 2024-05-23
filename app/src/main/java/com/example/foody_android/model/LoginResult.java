@@ -7,8 +7,18 @@ public class LoginResult {
     private String username;
     private String email;
     private String password;
-    private  int phone;
+    private String phone_number;
+
+
     private String fullname;
+
+    public String getPhone_number() {
+        return phone_number;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
+    }
 
     private  String accessToken;
 
@@ -61,13 +71,6 @@ public class LoginResult {
         this.accessToken = accessToken;
     }
 
-    public int getPhone() {
-        return phone;
-    }
-
-    public void setPhone(int phone) {
-        this.phone = phone;
-    }
 
     public String getFullname() {
         return fullname;
