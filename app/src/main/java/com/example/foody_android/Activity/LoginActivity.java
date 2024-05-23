@@ -31,8 +31,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private static final String BASE_URL = "http://192.168.1.5:3001/";
-    //private static final String BASE_URL = "http://10.0.2.2:3001/";
+    //private static final String BASE_URL = "http://192.168.1.5:3001/";
+    private static final String BASE_URL = "http://10.0.2.2:3001/";
 
     private Button btnLogin;
 
@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                     // Lưu authToken vào SharedPreferences
                     SharedPreferencesManager.getInstance(LoginActivity.this).saveAuthToken(authToken);
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                   // AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
 
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);

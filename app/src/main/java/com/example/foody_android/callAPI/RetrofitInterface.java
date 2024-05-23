@@ -1,5 +1,7 @@
 package com.example.foody_android.callAPI;
 
+import android.util.Log;
+
 import com.example.foody_android.model.Address;
 import com.example.foody_android.model.Food;
 import com.example.foody_android.model.LoginResult;
@@ -17,6 +19,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
@@ -37,9 +40,12 @@ public interface RetrofitInterface {
     @POST("/api/orders/addorder")
     Call<Order> addOrder(@Body HashMap<String, Integer> map);
 
+    @GET("/api/auth/getUserProfile")
+    Call<LoginResult> getUserProfile(@Header("Authorization") String authToken);
 
-    @GET("/api/test/user")
-    Call<User> getUserProfile(@Header("Authorization") String authToken);
+
+    @PUT("/api/auth/editProfile")
+    Call<LoginResult> updateUserProfile(@Header("Authorization") String authToken,@Body HashMap<String, String> map);
 
     @GET("/api/restaurants/getall")
     Call<List<Restaurant>> getRestaurants(@QueryMap Map<String, String> options);

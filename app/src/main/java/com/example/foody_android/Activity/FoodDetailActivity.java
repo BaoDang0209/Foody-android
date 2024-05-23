@@ -33,7 +33,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FoodDetailActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-   // private static final String BASE_URL = "http://192.168.1.3:3001/";
+    private static final String BASE_URL = "http://192.168.1.3:3001/";
     private static final String BASE_URL = "http://192.168.1.5:3001/";
     // static final String BASE_URL = "http://192.168.1.5:3001/";
     
