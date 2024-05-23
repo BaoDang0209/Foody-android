@@ -1,6 +1,7 @@
 package com.example.foody_android.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foody_android.Activity.FoodDetailActivity;
 import com.example.foody_android.R;
 import com.example.foody_android.model.Food;
 
@@ -42,6 +44,10 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, FoodDetailActivity.class);
+                intent.putExtra("FOOD_ID", food.getId()); // Pass food ID as an integer extra
+                context.startActivity(intent);
 
             }
         });
