@@ -3,6 +3,7 @@ package com.example.foody_android.callAPI;
 import com.example.foody_android.model.Address;
 import com.example.foody_android.model.Food;
 import com.example.foody_android.model.LoginResult;
+import com.example.foody_android.model.Order;
 import com.example.foody_android.model.User;
 import com.example.foody_android.model.Restaurant;
 
@@ -31,6 +32,9 @@ public interface RetrofitInterface {
 
     @POST("/api/user/otp/send-otp")
     Call<LoginResult> sendOTP(@Body HashMap<String, String> map);
+
+    @POST("/api/orders/addorder")
+    Call<Order> addOrder(@Body HashMap<String, Integer> map);
 
 
     @GET("/api/test/user")

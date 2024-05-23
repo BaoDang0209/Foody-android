@@ -1,16 +1,21 @@
 package com.example.foody_android.Activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.foody_android.R;
 import com.example.foody_android.callAPI.RetrofitInterface;
 import com.example.foody_android.model.Food;
+import com.example.foody_android.model.Order;
+
+import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,6 +31,7 @@ public class FoodDetailActivity extends AppCompatActivity {
     private TextView foodName, description, price, quality, total, minusBtn, plusBtn;
     private AppCompatButton orderBTN;
     private ImageView backBTN;
+    private int foodId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +59,7 @@ public class FoodDetailActivity extends AppCompatActivity {
         backBTN.setOnClickListener(v -> finish());
 
         // Get the food ID passed from the previous activity
-        int foodId = getIntent().getIntExtra("FOOD_ID", -1); // Default value -1 if not found
+        foodId = getIntent().getIntExtra("FOOD_ID", -1); // Default value -1 if not found
         if (foodId != -1) {
             fetchFoodDetails(foodId);
         } else {
@@ -117,6 +123,46 @@ public class FoodDetailActivity extends AppCompatActivity {
     }
 
     private void handleOrder() {
-        // Handle the order button click event
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("id", foodId);
+        map.put("quality", Integer.parseInt(quality.getText().toString()));
+
+        Call<Order> call = retrofitInterface.addOrder(map);
+        call.enqueue(new Callback<Order>() {
+            @Override
+            public void onResponse(Call<Order> call, Response<Order> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Order order = response.body();
+                    showOrderInfo(order);
+                } else {
+                    // Hiển thị thông báo lỗi
+                    Toast.makeText(FoodDetailActivity.this, "Failed to place order", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Order> call, Throwable t) {
+                // Hiển thị thông báo lỗi
+                Toast.makeText(FoodDetailActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void showOrderInfo(Order order) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Order Details");
+        builder.setMessage("Order ID: " + order.getId() + "\n"
+                + "Food ID: " + order.getId() + "\n"
+                + "Quality: " + order.getQuality() + "\n"
+                + "Price: " + order.getPrice());
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss(); // Đóng dialog khi người dùng nhấn OK
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
