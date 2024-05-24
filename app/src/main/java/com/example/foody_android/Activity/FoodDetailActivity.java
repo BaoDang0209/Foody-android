@@ -39,8 +39,8 @@ public class FoodDetailActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
     //private static final String BASE_URL = "http://192.168.1.3:3001/";
-    private static final String BASE_URL = "http://192.168.1.5:3001/";
-    // static final String BASE_URL = "http://192.168.1.5:3001/";
+    //private static final String BASE_URL = "http://192.168.1.5:3001/";
+    private static final String BASE_URL = "http://10.0.2.2:3001/";
     
     private TextView foodName, description, price, quality, total, minusBtn, plusBtn, resAddress;
     private AppCompatButton orderBTN;
@@ -51,10 +51,12 @@ public class FoodDetailActivity extends AppCompatActivity {
     private ImageView foodImg;
 
     private String authToken;
-    private String fullname;
 
 
     private LoginResult loginResult;
+
+    private String fullname, phone;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,10 +76,15 @@ public class FoodDetailActivity extends AppCompatActivity {
         backBTN = findViewById(R.id.backBtn);
         userAddress = findViewById(R.id.userAddress);
 
+        authToken = SharedPreferencesManager.getInstance(this).getAuthToken();
+
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
+
+
 
         retrofitInterface = retrofit.create(RetrofitInterface.class);
 
@@ -87,7 +94,7 @@ public class FoodDetailActivity extends AppCompatActivity {
         backBTN.setOnClickListener(v -> finish());
 
         // Get the food ID passed from the previous activity
-        foodId = getIntent().getIntExtra("FOOD_ID", -1); // Default value -1 if not found
+            foodId = getIntent().getIntExtra("FOOD_ID", -1); // Default value -1 if not found
         int foodId = getIntent().getIntExtra("FOOD_ID", -1); // Default value -1 if not found
         if (foodId != -1) {
             fetchFoodDetails(foodId);
@@ -96,7 +103,10 @@ public class FoodDetailActivity extends AppCompatActivity {
             finish(); // Close the activity if no ID is passed or is invalid
         }
 
-        orderBTN.setOnClickListener(v -> handleOrder());
+        orderBTN.setOnClickListener(v1 ->
+        {
+            handleOrder();
+        });
 
         minusBtn.setOnClickListener(v -> decreaseQuantity());
         plusBtn.setOnClickListener(v -> increaseQuantity());
@@ -204,6 +214,8 @@ public class FoodDetailActivity extends AppCompatActivity {
     }
 
     private void handleOrder() {
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
+
         // Call API to get user data
         Call<LoginResult> callUser = retrofitInterface.getUserProfile("Bearer " + authToken);
         callUser.enqueue(new Callback<LoginResult>() {
@@ -212,12 +224,49 @@ public class FoodDetailActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     LoginResult user = response.body();
                     if (user != null) {
-                        //Give informaton user
-                        
+                        fullname = user.getFullname();
+                        phone = user.getPhone_number();
+
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("menuItemId", String.valueOf(foodId));
+                        map.put("quantity", String.valueOf(Integer.parseInt(quality.getText().toString())));
+                        map.put("phoneNumber", phone);
+                        map.put("receiverName", fullname);
+                        map.put("from_address", resAddress.getText().toString());
+                        map.put("to_address", userAddress.getText().toString());
+
+                        // Gọi API addOrder với HashMap map
+                        Call<Order> call = retrofitInterface.addOrder(map);
+                        call.enqueue(new Callback<Order>() {
+                            @Override
+                            public void onResponse(Call<Order> call, Response<Order> response) {
+                                Log.d("OrderProcess", "onResponse called");
+                                if (response.isSuccessful() && response.body() != null) {
+                                    Order order = response.body();
+                                    Log.d("OrderProcess", "Response body: " + order.toString());
+                                   // showOrderInfo(order);
+                                } else {
+                                    Log.d("OrderResponse", "Response not successful: " + response.code());
+                                    if (response.errorBody() != null) {
+                                        try {
+                                            Log.d("OrderResponse", "Error body: " + response.errorBody().string());
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    Toast.makeText(FoodDetailActivity.this, "Failed to place order", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Order> call, Throwable t) {
+                                Log.d("OrderProcess", "onFailure called with message: " + t.getMessage());
+                                Toast.makeText(FoodDetailActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 } else {
                     Log.e("UserInformation", "Response error: " + response.message());
-                    // Handle the case where the response is not successful
                 }
             }
 
@@ -227,58 +276,25 @@ public class FoodDetailActivity extends AppCompatActivity {
             }
         });
 
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("menuItemId", foodId);
-        map.put("quantity", Integer.parseInt(quality.getText().toString()));
-        map.put("phoneNumber", "null");
-        map.put("receiverName", "null");
-        map.put("from_address", resAddress.getText().toString());
-        map.put("to_address", userAddress.getText().toString());
 
-        Call<Order> call = retrofitInterface.addOrder(map);
-        call.enqueue(new Callback<Order>() {
-            @Override
-            public void onResponse(Call<Order> call, Response<Order> response) {
-                Log.d("OrderProcess", "onResponse called");
-                if (response.isSuccessful() && response.body() != null) {
-                    Order order = response.body();
-                    Log.d("OrderProcess", "Response body: " + order.toString());
-                    showOrderInfo(order);
-                } else {
-                    Log.d("OrderResponse", "Response not successful: " + response.code());
-                    if (response.errorBody() != null) {
-                        try {
-                            Log.d("OrderResponse", "Error body: " + response.errorBody().string());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    Toast.makeText(FoodDetailActivity.this, "Failed to place order", Toast.LENGTH_SHORT).show();
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Order> call, Throwable t) {
-                Log.d("OrderProcess", "onFailure called with message: " + t.getMessage());
-                Toast.makeText(FoodDetailActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+
     }
 
 
-    private void showOrderInfo(Order order) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Order Details");
-        builder.setMessage("Order ID: " + order.getId() + "\n"
-                + "Food ID: " + order.getMenuItemId() + "\n"
-                + "Quantity: " + order.getQuality() + "\n"
-                + "Price: " + order.getPrice() + "\n");
-
-        builder.setPositiveButton("OK", (dialog, which) -> {
-            dialog.dismiss(); // Đóng dialog khi người dùng nhấn OK
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
+//    private void showOrderInfo(Order order) {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle("Order Details");
+//        builder.setMessage("Order ID: " + order.get() + "\n"
+//                + "Food ID: " + order.getMenuItemId() + "\n"
+//                + "Quantity: " + order.getQuality() + "\n"
+//                + "Price: " + order.getPrice() + "\n");
+//
+//        builder.setPositiveButton("OK", (dialog, which) -> {
+//            dialog.dismiss(); // Đóng dialog khi người dùng nhấn OK
+//        });
+//
+//        AlertDialog dialog = builder.create();
+//        dialog.show();
+//    }
 }
