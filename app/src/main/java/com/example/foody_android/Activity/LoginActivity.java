@@ -88,8 +88,10 @@ public class LoginActivity extends AppCompatActivity {
                     String authToken = result.getToken();
                     Log.d("AuthToken", authToken);
 
-                    // Lưu authToken vào SharedPreferences
+                    // Lưu authToken và userID vào SharedPreferences
                     SharedPreferencesManager.getInstance(LoginActivity.this).saveAuthToken(authToken);
+                    SharedPreferencesManager.getInstance(LoginActivity.this).saveUserId(userId);
+
 
                    // AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
 

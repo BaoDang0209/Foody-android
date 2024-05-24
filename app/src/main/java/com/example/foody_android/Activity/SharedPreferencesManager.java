@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 public class SharedPreferencesManager {
     private static final String SHARED_PREF_NAME = "my_shared_pref";
     private static final String KEY_AUTH_TOKEN = "auth_token";
+    private static final String KEY_USER_ID = "user_id";
 
     private static SharedPreferencesManager instance;
     private SharedPreferences sharedPreferences;
@@ -34,6 +35,22 @@ public class SharedPreferencesManager {
     public void clearAuthToken() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(KEY_AUTH_TOKEN);
+        editor.apply();
+    }
+
+    public void saveUserId(int userId) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(KEY_USER_ID, userId);
+        editor.apply();
+    }
+
+    public int getUserId() {
+        return sharedPreferences.getInt(KEY_USER_ID, -1); // -1 if not found
+    }
+
+    public void clearUserId() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(KEY_USER_ID);
         editor.apply();
     }
 }

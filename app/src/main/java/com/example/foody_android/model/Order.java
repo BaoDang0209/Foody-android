@@ -1,8 +1,25 @@
 package com.example.foody_android.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Order {
+
+    @SerializedName("id")
     private int id;
+
+    @SerializedName("orderId")
     private int orderId;
+
+    @SerializedName("menuItemId")
+    private int menuItemId;
+
+    @SerializedName("quality")
+    private int quality;
+
+    @SerializedName("price")
+    private int price;
+
+    // Getters and Setters
 
     public int getId() {
         return id;
@@ -44,7 +61,14 @@ public class Order {
         this.price = price;
     }
 
-    private int menuItemId;
-    private int quality;
-    private int price;
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", orderId=" + orderId +
+                ", menuItemId=" + menuItemId +
+                ", quality=" + quality +
+                ", price=" + price +
+                '}';
+    }
 }
