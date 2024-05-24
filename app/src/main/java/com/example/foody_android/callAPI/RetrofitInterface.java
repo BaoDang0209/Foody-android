@@ -39,6 +39,7 @@ public interface RetrofitInterface {
 
 //    @POST("/api/orders/addorder")
 //    Call<Order> addOrder(@Body HashMap<String, Object> map);
+    Call<Order> addOrder(@Body HashMap<String, String> map);
 
     @GET("/api/auth/getUserProfile")
     Call<LoginResult> getUserProfile(@Header("Authorization") String authToken);
