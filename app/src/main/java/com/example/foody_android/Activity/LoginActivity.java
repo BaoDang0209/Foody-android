@@ -1,6 +1,8 @@
 package com.example.foody_android.Activity;
 
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,12 +10,17 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.arch.core.executor.ArchTaskExecutor;
 
 import com.example.foody_android.R;
 import com.example.foody_android.callAPI.RetrofitInterface;
 import com.example.foody_android.model.LoginResult;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
 import android.widget.EditText;
 import android.widget.Button;
 
@@ -25,6 +32,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -38,6 +46,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextView gotoSignUp;
     private EditText inputPassword, inputEmail;
+
+    private String fcmToken;
+    HashMap<String, String> map = new HashMap<>();
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +73,10 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);
         });
+        getFCMToken();
     }
+
+
 
 
     private void handleLogin() {
@@ -73,7 +88,6 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        HashMap<String, String> map = new HashMap<>();
         map.put("username", username);
         map.put("password", password);
 
@@ -90,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     // Lưu authToken và userID vào SharedPreferences
                     SharedPreferencesManager.getInstance(LoginActivity.this).saveAuthToken(authToken);
-                    SharedPreferencesManager.getInstance(LoginActivity.this).saveUserId(userId);
+                    //SharedPreferencesManager.getInstance(LoginActivity.this).saveUserId(userId);
 
 
                    // AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
@@ -114,4 +128,35 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void getFCMToken() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (task.isSuccessful()) {
+                            // Get new FCM token
+                            fcmToken = task.getResult();
+
+                            // Log và hiển thị token
+                            Log.d(TAG, "FCM Token: " + fcmToken);
+
+                            // Thêm fcm_token vào map
+                            map.put("fcm_token", fcmToken);
+
+                            // Check if activity is not destroyed
+                            if (!isFinishing() && !isDestroyed()) {
+                                // Update UI or perform any other actions if necessary
+                            }
+                        } else {
+                            // Handle errors
+                            Exception exception = task.getException();
+                            if (exception != null) {
+                                Log.w(TAG, "Fetching FCM token failed", exception);
+                            } else {
+                                Log.w(TAG, "Fetching FCM token failed with no exception");
+                            }
+                        }
+                    }
+                });
+    }
 }
