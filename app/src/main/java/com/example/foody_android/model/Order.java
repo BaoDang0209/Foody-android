@@ -4,38 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Order {
 
-    @SerializedName("id")
-    private int id;
-
-    @SerializedName("orderId")
-    private int orderId;
-
-    @SerializedName("menuItemId")
     private int menuItemId;
-
-    @SerializedName("quality")
-    private int quality;
-
-    @SerializedName("price")
-    private int price;
-
-    // Getters and Setters
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
+    private int quantity;
+    private String phoneNumber;
 
     public int getMenuItemId() {
         return menuItemId;
@@ -45,30 +16,48 @@ public class Order {
         this.menuItemId = menuItemId;
     }
 
-    public int getQuality() {
-        return quality;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setQuality(int quality) {
-        this.quality = quality;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public int getPrice() {
-        return price;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", orderId=" + orderId +
-                ", menuItemId=" + menuItemId +
-                ", quality=" + quality +
-                ", price=" + price +
-                '}';
+    public String getReceiverName() {
+        return receiverName;
     }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
+
+    public String getFrom_address() {
+        return from_address;
+    }
+
+    public void setFrom_address(String from_address) {
+        this.from_address = from_address;
+    }
+
+    public String getTo_address() {
+        return to_address;
+    }
+
+    public void setTo_address(String to_address) {
+        this.to_address = to_address;
+    }
+
+    private String receiverName;
+    private String from_address;
+
+    private String to_address;
 }
