@@ -21,7 +21,6 @@ import com.example.foody_android.model.Food;
 import com.example.foody_android.model.Restaurant;
 import com.example.foody_android.callAPI.RetrofitInterface;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,9 +81,16 @@ public class HomeFragment extends Fragment implements ResAdapter.OnRestaurantIte
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        fetchRestaurants();
+        fetchAllFoods();
+    }
+
     private void fetchRestaurants() {
         Map<String, String> options = new HashMap<>();
-        options.put("key", "value"); // Thay thế bằng các cặp key-value thực tế yêu cầu bởi API của bạn
+        options.put("key", "value");
 
         Call<List<Restaurant>> call = retrofitInterface.getRestaurants(options);
 
@@ -144,7 +150,6 @@ public class HomeFragment extends Fragment implements ResAdapter.OnRestaurantIte
 
     private void fetchAllFoods() {
         Call<List<Food>> call = retrofitInterface.getAllFoodItems();
-
         call.enqueue(new Callback<List<Food>>() {
             @Override
             public void onResponse(Call<List<Food>> call, Response<List<Food>> response) {

@@ -2,6 +2,8 @@ package com.example.foody_android.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,6 +28,7 @@ public class ListFoodActivity extends AppCompatActivity {
     private RetrofitInterface retrofitInterface;
 
     private boolean isSearch = false;
+    private ImageView back;
     private static final String BASE_URL = "http://192.168.1.5:3001/";
 
     @Override
@@ -43,6 +46,8 @@ public class ListFoodActivity extends AppCompatActivity {
 
         retrofitInterface = retrofit.create(RetrofitInterface.class);
 
+        back=findViewById(R.id.backBtn);
+        back.setOnClickListener(v -> finish());
         Intent intent = getIntent();
         isSearch = intent.getBooleanExtra("isSearch", false);
         if (isSearch) {
@@ -56,6 +61,7 @@ public class ListFoodActivity extends AppCompatActivity {
                 showError("Restaurant ID is missing");
             }
         }
+
     }
 
     private void fetchSearch(String searchTxt) {
