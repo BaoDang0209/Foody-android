@@ -2,10 +2,11 @@ package com.example.foody_android.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -20,6 +21,7 @@ import com.example.foody_android.model.Food;
 import com.example.foody_android.model.Restaurant;
 import com.example.foody_android.callAPI.RetrofitInterface;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,11 +39,17 @@ public class HomeFragment extends Fragment implements ResAdapter.OnRestaurantIte
     private FoodAdapter foodAdapter;
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
+
+    private EditText searchText;
+    private ImageView searchBtn;
     private static final String BASE_URL = "http://192.168.1.5:3001/";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        searchText = view.findViewById(R.id.searchtext);
+        searchBtn = view.findViewById(R.id.searchBtn);
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -59,6 +67,18 @@ public class HomeFragment extends Fragment implements ResAdapter.OnRestaurantIte
         fetchRestaurants();
         fetchAllFoods();
 
+        searchBtn.setOnClickListener(v -> {
+            String searchTxt = searchText.getText().toString();
+            if (!searchTxt.isEmpty()) {
+                Intent intent = new Intent(getActivity(), ListFoodActivity.class);
+                intent.putExtra("searchTxt", searchTxt);
+                intent.putExtra("isSearch", true);
+                startActivity(intent);
+            } else {
+                showError("Search text is empty");
+            }
+        });
+
         return view;
     }
 
@@ -75,25 +95,21 @@ public class HomeFragment extends Fragment implements ResAdapter.OnRestaurantIte
                     List<Restaurant> restaurantList = response.body();
                     if (restaurantList != null) {
                         for (Restaurant restaurant : restaurantList) {
-                            // Lấy address_id từ mỗi nhà hàng và gọi API để lấy thông tin địa chỉ
                             int addressId = restaurant.getAddressId();
                             getAddressForRestaurant(addressId, restaurant);
                         }
                         setupResRecyclerView(restaurantList);
                     } else {
                         showError("No data available");
-                        Log.e("HomeFragment", "No data available");
                     }
                 } else {
                     showError("Failed to retrieve data");
-                    Log.e("HomeFragment", "Failed response code: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Restaurant>> call, Throwable t) {
                 showError("An error occurred: " + t.getMessage());
-                Log.e("HomeFragment", "Network call failure", t);
             }
         });
     }
@@ -107,24 +123,21 @@ public class HomeFragment extends Fragment implements ResAdapter.OnRestaurantIte
                 if (response.isSuccessful()) {
                     Address address = response.body();
                     if (address != null) {
-                        // Tạo chuỗi địa chỉ từ các thuộc tính của đối tượng Address
                         String fullAddress = address.getUnitNumber() + ", " +
                                 address.getStreetNumber() + ", " +
                                 address.getCity() + ", " +
                                 address.getRegion();
-                        // Cập nhật thông tin địa chỉ của nhà hàng dưới dạng chuỗi
                         restaurant.setAddress(fullAddress);
-                        // Cập nhật RecyclerView sau khi lấy được địa chỉ
                         resAdapter.notifyDataSetChanged();
                     }
                 } else {
-                    // Xử lý khi không thành công
+                    showError("Failed to retrieve address");
                 }
             }
 
             @Override
             public void onFailure(Call<Address> call, Throwable t) {
-                // Xử lý khi gặp lỗi
+                showError("An error occurred: " + t.getMessage());
             }
         });
     }
@@ -141,18 +154,15 @@ public class HomeFragment extends Fragment implements ResAdapter.OnRestaurantIte
                         setupFoodRecyclerView(foodList);
                     } else {
                         showError("No data available");
-                        Log.e("HomeFragment", "No data available");
                     }
                 } else {
                     showError("Failed to retrieve data");
-                    Log.e("HomeFragment", "Failed response code: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Food>> call, Throwable t) {
                 showError("An error occurred: " + t.getMessage());
-                Log.e("HomeFragment", "Network call failure", t);
             }
         });
     }

@@ -1,5 +1,6 @@
 package com.example.foody_android.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import com.example.foody_android.Adapter.ResFoodAdapter;
 import com.example.foody_android.R;
 import com.example.foody_android.callAPI.RetrofitInterface;
 import com.example.foody_android.model.Food;
+import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,6 +24,8 @@ public class ListFoodActivity extends AppCompatActivity {
     private ResFoodAdapter adapter;
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
+
+    private boolean isSearch = false;
     private static final String BASE_URL = "http://192.168.1.5:3001/";
 
     @Override
@@ -39,12 +43,44 @@ public class ListFoodActivity extends AppCompatActivity {
 
         retrofitInterface = retrofit.create(RetrofitInterface.class);
 
-        int restaurantId = getIntent().getIntExtra("restaurant_id", -1);
-        if (restaurantId != -1) {
-            fetchFoods(restaurantId);
+        Intent intent = getIntent();
+        isSearch = intent.getBooleanExtra("isSearch", false);
+        if (isSearch) {
+            String searchTxt = intent.getStringExtra("searchTxt");
+            fetchSearch(searchTxt);
         } else {
-            showError("Restaurant ID is missing");
+            int restaurantId = intent.getIntExtra("restaurant_id", -1);
+            if (restaurantId != -1) {
+                fetchFoods(restaurantId);
+            } else {
+                showError("Restaurant ID is missing");
+            }
         }
+    }
+
+    private void fetchSearch(String searchTxt) {
+        Call<List<Food>> call = retrofitInterface.getFoodByName(searchTxt);
+
+        call.enqueue(new Callback<List<Food>>() {
+            @Override
+            public void onResponse(Call<List<Food>> call, Response<List<Food>> response) {
+                if (response.isSuccessful()) {
+                    List<Food> foods = response.body();
+                    if (foods != null && !foods.isEmpty()) {
+                        setupRecyclerView(foods);
+                    } else {
+                        showError("No matching food items found");
+                    }
+                } else {
+                    showError("Failed to retrieve data");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Food>> call, Throwable throwable) {
+                showError("An error occurred: " + throwable.getMessage());
+            }
+        });
     }
 
     private void fetchFoods(int restaurantId) {

@@ -24,8 +24,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="Information"
-            android:textColor="@color/black"
-            android:textSize="16dp"
+
+            android:textColor="@color/red"
+            android:textSize="24dp"
             android:textStyle="bold" />
 
         <TextView

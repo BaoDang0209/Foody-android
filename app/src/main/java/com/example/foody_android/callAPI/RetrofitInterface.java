@@ -65,5 +65,8 @@ public interface RetrofitInterface {
     @GET("/api/restaurants/")
     Call<Restaurant> getRestaurantById(@Query("id") int id);
 
+    @GET("/api/menu_items/getItembyName/{searchkeyword}")
+    Call<List<Food>> getFoodByName(@Path("searchkeyword") String searchkeyword);
+
 }
 

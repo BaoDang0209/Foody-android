@@ -31,8 +31,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    //private static final String BASE_URL = "http://192.168.1.5:3001/";
-    private static final String BASE_URL = "http://10.0.2.2:3001/";
+    private static final String BASE_URL = "http://192.168.1.5:3001/";
+    //private static final String BASE_URL = "http://10.0.2.2:3001/";
 
     private Button btnLogin;
 
@@ -57,12 +57,9 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin.setOnClickListener(v -> handleLogin());
 
-        gotoSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(intent);
-            }
+        gotoSignUp.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+            startActivity(intent);
         });
     }
 
