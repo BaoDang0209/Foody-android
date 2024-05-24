@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.menu_chat:
                     // Add your ChatFragment code here
                     break;
-                case R.id.menu_noti:
+                case R.id.menu_cart:
                     // Add your NotificationsFragment code here
                     break;
                 case R.id.menu_profile:
