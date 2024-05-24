@@ -41,7 +41,7 @@ public class FoodDetailActivity extends AppCompatActivity {
     //private static final String BASE_URL = "http://192.168.1.3:3001/";
     //private static final String BASE_URL = "http://192.168.1.5:3001/";
     private static final String BASE_URL = "http://10.0.2.2:3001/";
-    
+
     private TextView foodName, description, price, quality, total, minusBtn, plusBtn, resAddress;
     private AppCompatButton orderBTN;
     private EditText userAddress, phoneNum;
@@ -56,6 +56,8 @@ public class FoodDetailActivity extends AppCompatActivity {
     private LoginResult loginResult;
 
     private String fullname, phone;
+
+    private String orderId;
 
 
     @Override
@@ -94,7 +96,7 @@ public class FoodDetailActivity extends AppCompatActivity {
         backBTN.setOnClickListener(v -> finish());
 
         // Get the food ID passed from the previous activity
-            foodId = getIntent().getIntExtra("FOOD_ID", -1); // Default value -1 if not found
+        foodId = getIntent().getIntExtra("FOOD_ID", -1); // Default value -1 if not found
         int foodId = getIntent().getIntExtra("FOOD_ID", -1); // Default value -1 if not found
         if (foodId != -1) {
             fetchFoodDetails(foodId);
@@ -236,15 +238,19 @@ public class FoodDetailActivity extends AppCompatActivity {
                         map.put("to_address", userAddress.getText().toString());
 
                         // Gọi API addOrder với HashMap map
-                        Call<Order> call = retrofitInterface.addOrder(map);
+                        Call<Order> call = retrofitInterface.addOrder("Bearer " + authToken, map);
                         call.enqueue(new Callback<Order>() {
                             @Override
                             public void onResponse(Call<Order> call, Response<Order> response) {
                                 Log.d("OrderProcess", "onResponse called");
-                                if (response.isSuccessful() && response.body() != null) {
+                                if (response.code() == 200) {
                                     Order order = response.body();
-                                    Log.d("OrderProcess", "Response body: " + order.toString());
-                                   // showOrderInfo(order);
+
+                                    showOrderInfo(order);
+
+
+
+
                                 } else {
                                     Log.d("OrderResponse", "Response not successful: " + response.code());
                                     if (response.errorBody() != null) {
@@ -275,26 +281,42 @@ public class FoodDetailActivity extends AppCompatActivity {
                 Log.e("UserInformation", "API call failed: ", t);
             }
         });
+    }
 
+    private void showOrderInfo(Order order) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Order Confirmation")
+                .setMessage("Order placed successfully!\nOrder ID: " + order.getOrderId())
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Xử lý khi người dùng nhấn nút Xác nhận
+                        dialog.dismiss();
+                        // Thêm mã code xử lý khi người dùng xác nhận đơn hàng ở đây (nếu cần)
+                        HashMap<String, Integer> map = new HashMap<>();
+                        map.put("order", order.getOrderId());
+                        Call<Order> call = retrofitInterface.notifyShipper("Bearer " + authToken, map);
+                        call.enqueue(new Callback<Order>() {
+                            @Override
+                            public void onResponse(Call<Order> call, Response<Order> response) {
 
+                            }
 
+                            @Override
+                            public void onFailure(Call<Order> call, Throwable throwable) {
 
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Xử lý khi người dùng nhấn nút Không xác nhận hoặc Cancel
+                        dialog.dismiss();
+                        // Thêm mã code xử lý khi người dùng không xác nhận đơn hàng ở đây (nếu cần)
+                    }
+                })
+                .show();
     }
 
 
-//    private void showOrderInfo(Order order) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("Order Details");
-//        builder.setMessage("Order ID: " + order.get() + "\n"
-//                + "Food ID: " + order.getMenuItemId() + "\n"
-//                + "Quantity: " + order.getQuality() + "\n"
-//                + "Price: " + order.getPrice() + "\n");
-//
-//        builder.setPositiveButton("OK", (dialog, which) -> {
-//            dialog.dismiss(); // Đóng dialog khi người dùng nhấn OK
-//        });
-//
-//        AlertDialog dialog = builder.create();
-//        dialog.show();
-//    }
 }

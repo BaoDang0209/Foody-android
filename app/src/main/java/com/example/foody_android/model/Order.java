@@ -5,6 +5,16 @@ import com.google.gson.annotations.SerializedName;
 public class Order {
 
     private int menuItemId;
+    private int orderId;
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
     private int quantity;
     private String phoneNumber;
 

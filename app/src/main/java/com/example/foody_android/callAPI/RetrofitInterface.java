@@ -37,8 +37,6 @@ public interface RetrofitInterface {
     @POST("/api/user/otp/send-otp")
     Call<LoginResult> sendOTP(@Body HashMap<String, String> map);
 
-//    @POST("/api/orders/addorder")
-//    Call<Order> addOrder(@Body HashMap<String, Object> map);
     @POST("/api/orders/addorder")
     Call<Order> addOrder(@Body HashMap<String, String> map);
 
@@ -71,7 +69,9 @@ public interface RetrofitInterface {
     Call<List<Food>> getFoodByName(@Path("searchkeyword") String searchkeyword);
 
     @POST("/api/orders/addorder")
-    Call<Order> addOrder(@Body HashMap<String, String> map);
+    Call<Order> addOrder(@Header("Authorization") String authToken,@Body HashMap<String, String> map);
+    @POST("/api/notification")
+    Call<Order> notifyShipper(@Header("Authorization") String authToken,@Body HashMap<String, Integer> map);
 
 }
 
