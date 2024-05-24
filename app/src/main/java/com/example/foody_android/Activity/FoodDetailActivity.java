@@ -1,8 +1,11 @@
 package com.example.foody_android.Activity;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +20,7 @@ import com.example.foody_android.callAPI.RetrofitInterface;
 import com.example.foody_android.model.Address;
 import com.example.foody_android.model.Food;
 
+import com.example.foody_android.model.LoginResult;
 import com.example.foody_android.model.Order;
 
 import java.util.HashMap;
@@ -39,9 +43,15 @@ public class FoodDetailActivity extends AppCompatActivity {
     
     private TextView foodName, description, price, quality, total, minusBtn, plusBtn, resAddress;
     private AppCompatButton orderBTN;
+    private EditText userAddress, phoneNum;
+
     private ImageView backBTN;
     private int foodId;
     private ImageView foodImg;
+
+    private String authToken;
+
+    private LoginResult loginResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +69,7 @@ public class FoodDetailActivity extends AppCompatActivity {
         foodImg = findViewById(R.id.pic);
         orderBTN = findViewById(R.id.orderBtn);
         backBTN = findViewById(R.id.backBtn);
+        userAddress = findViewById(R.id.userAddress);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -66,6 +77,9 @@ public class FoodDetailActivity extends AppCompatActivity {
                 .build();
 
         retrofitInterface = retrofit.create(RetrofitInterface.class);
+
+        //Get authToken from SharedPreferences
+
 
         backBTN.setOnClickListener(v -> finish());
 
@@ -109,7 +123,10 @@ public class FoodDetailActivity extends AppCompatActivity {
     }
 
     private void fetchFoodDetails(int foodId) {
+        Call<Food> callFood = retrofitInterface.getFoodByID(foodId);
+        callFood.enqueue(new Callback<Food>() {
             @Override
+            public void onResponse(Call<Food> callFood, Response<Food> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Food food = response.body();
                     foodName.setText(food.getItemName());
@@ -124,13 +141,17 @@ public class FoodDetailActivity extends AppCompatActivity {
             }
 
             @Override
+            public void onFailure(Call<Food> callFood, Throwable t) {
                 showError("Error: " + t.getMessage());
             }
         });
     }
 
     private void fetchAddressRestaurant(int id) {
+        Call<Restaurant> callRes = retrofitInterface.getRestaurantById(id);
+        callRes.enqueue(new Callback<Restaurant>() {
             @Override
+            public void onResponse(Call<Restaurant> callRes, Response<Restaurant> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Restaurant restaurant = response.body();
                     int addressId = restaurant.getAddressId();
@@ -141,13 +162,17 @@ public class FoodDetailActivity extends AppCompatActivity {
             }
 
             @Override
+            public void onFailure(Call<Restaurant> callRes, Throwable t) {
                 showError("Error: " + t.getMessage());
             }
         });
     }
 
     private void getAddressForRestaurant(int addressId) {
+        Call<Address> callAddress = retrofitInterface.getAddressId(addressId);
+        callAddress.enqueue(new Callback<Address>() {
             @Override
+            public void onResponse(Call<Address> callAddress, Response<Address> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Address address = response.body();
                     String fullAddress = address.getUnitNumber() + ", " +
@@ -161,6 +186,7 @@ public class FoodDetailActivity extends AppCompatActivity {
             }
 
             @Override
+            public void onFailure(Call<Address> callAddress, Throwable t) {
                 showError("Error: " + t.getMessage());
             }
         });
@@ -173,8 +199,19 @@ public class FoodDetailActivity extends AppCompatActivity {
 
     private void handleOrder() {
 
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("menuItemId", foodId);
+        map.put("quantity", Integer.parseInt(quality.getText().toString()));
+        map.put("phoneNumber", "null");
+        map.put("receiverName", "null");
+        map.put("from_address", resAddress.getText().toString());
+        map.put("to_address", userAddress.getText().toString());
+
+        Call<Order> callOrder = retrofitInterface.addOrder(map);
+        callOrder.enqueue(new Callback<Order>() {
             @Override
             public void onResponse(Call<Order> call, Response<Order> response) {
+            public void onResponse(Call<Order> callOrder, Response<Order> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Order order = response.body();
                     showOrderInfo(order);
@@ -185,11 +222,13 @@ public class FoodDetailActivity extends AppCompatActivity {
             }
 
             @Override
+            public void onFailure(Call<Order> callOrder, Throwable t) {
                 // Hiển thị thông báo lỗi
                 Toast.makeText(FoodDetailActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
     private void showOrderInfo(Order order) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Order Details");
@@ -197,6 +236,9 @@ public class FoodDetailActivity extends AppCompatActivity {
                 + "Food ID: " + order.getId() + "\n"
                 + "Quality: " + order.getQuality() + "\n"
                 + "Price: " + order.getPrice());
+                + "Food ID: " + order.getOrderId() + "\n"
+                + "Quantity: " + order.getQuality() + "\n"
+                + "Price: " + order.getPrice() + "\n");
 
         builder.setPositiveButton("OK", (dialog, which) -> {
             dialog.dismiss(); // Đóng dialog khi người dùng nhấn OK
