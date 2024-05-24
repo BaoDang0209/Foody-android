@@ -109,10 +109,7 @@ public class FoodDetailActivity extends AppCompatActivity {
     }
 
     private void fetchFoodDetails(int foodId) {
-        Call<Food> call = retrofitInterface.getFoodByID(foodId);
-        call.enqueue(new Callback<Food>() {
             @Override
-            public void onResponse(Call<Food> call, Response<Food> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Food food = response.body();
                     foodName.setText(food.getItemName());
@@ -127,17 +124,13 @@ public class FoodDetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Food> call, Throwable t) {
                 showError("Error: " + t.getMessage());
             }
         });
     }
 
     private void fetchAddressRestaurant(int id) {
-        Call<Restaurant> call = retrofitInterface.getRestaurantById(id);
-        call.enqueue(new Callback<Restaurant>() {
             @Override
-            public void onResponse(Call<Restaurant> call, Response<Restaurant> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Restaurant restaurant = response.body();
                     int addressId = restaurant.getAddressId();
@@ -148,17 +141,13 @@ public class FoodDetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Restaurant> call, Throwable t) {
                 showError("Error: " + t.getMessage());
             }
         });
     }
 
     private void getAddressForRestaurant(int addressId) {
-        Call<Address> call = retrofitInterface.getAddressId(addressId);
-        call.enqueue(new Callback<Address>() {
             @Override
-            public void onResponse(Call<Address> call, Response<Address> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Address address = response.body();
                     String fullAddress = address.getUnitNumber() + ", " +
@@ -172,7 +161,6 @@ public class FoodDetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Address> call, Throwable t) {
                 showError("Error: " + t.getMessage());
             }
         });
@@ -184,12 +172,7 @@ public class FoodDetailActivity extends AppCompatActivity {
     }
 
     private void handleOrder() {
-        HashMap<String, Integer> map = new HashMap<>();
-        map.put("id", foodId);
-        map.put("quality", Integer.parseInt(quality.getText().toString()));
 
-        Call<Order> call = retrofitInterface.addOrder(map);
-        call.enqueue(new Callback<Order>() {
             @Override
             public void onResponse(Call<Order> call, Response<Order> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -202,7 +185,6 @@ public class FoodDetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Order> call, Throwable t) {
                 // Hiển thị thông báo lỗi
                 Toast.makeText(FoodDetailActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
