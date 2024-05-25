@@ -99,6 +99,7 @@ public class OtpAcitivity extends AppCompatActivity {
 
                                 Intent intent = new Intent(OtpAcitivity.this, LoginActivity.class);
                                 startActivity(intent);
+                                Toast.makeText(OtpAcitivity.this, "Successfull !! Please Login again", Toast.LENGTH_LONG).show();
                                 finish();
 
                     // Save user session here if needed
