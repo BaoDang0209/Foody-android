@@ -13,8 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.foody_android.R;
-import com.example.foody_android.callAPI.RetrofitInterface;
-import com.example.foody_android.model.LoginResult;
+import com.example.foody_android.CallAPI.RetrofitInterface;
+import com.example.foody_android.Model.LoginResult;
 import com.example.foody_android.CallAPI.RetrofitInterface;
 import com.example.foody_android.Model.LoginResult;
 import com.google.android.gms.tasks.OnCompleteListener;
