@@ -36,10 +36,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FoodDetailActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private static final String BASE_URL = "http://192.168.1.2:3001/";
-    //private static final String BASE_URL = "http://192.168.1.5:3001/";
-    //private static final String BASE_URL = "http://10.0.2.2:3001/";
 
+
+
+    private static final String BASE_URL = "http://192.168.1.8:3001/";
+
+    
     private TextView foodName, description, price, quality, total, minusBtn, plusBtn, resAddress;
     private AppCompatButton orderBTN;
     private EditText userAddress, phoneNum;
@@ -94,6 +96,7 @@ public class FoodDetailActivity extends AppCompatActivity {
         backBTN.setOnClickListener(v -> finish());
 
         // Get the food ID passed from the previous activity
+            foodId = getIntent().getIntExtra("FOOD_ID", -1); // Default value -1 if not found
         foodId = getIntent().getIntExtra("FOOD_ID", -1); // Default value -1 if not found
         int foodId = getIntent().getIntExtra("FOOD_ID", -1); // Default value -1 if not found
         if (foodId != -1) {
@@ -243,6 +246,7 @@ public class FoodDetailActivity extends AppCompatActivity {
                                 Log.d("OrderProcess", "onResponse called");
                                 if (response.code() == 200) {
                                     Order order = response.body();
+                                   // showOrderInfo(order);
 
                                     showOrderInfo(order);
 
@@ -317,4 +321,19 @@ public class FoodDetailActivity extends AppCompatActivity {
     }
 
 
+   /*private void showOrderInfo(Order order) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Order Details");
+        builder.setMessage("Order ID: " + order.get() + "\n"
+                + "Food ID: " + order.getMenuItemId() + "\n"
+                + "Quantity: " + order.getQuality() + "\n"
+               + "Price: " + order.getPrice() + "\n");
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            dialog.dismiss();
+       });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }*/
 }

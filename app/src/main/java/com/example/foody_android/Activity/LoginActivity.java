@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.foody_android.R;
 import com.example.foody_android.CallAPI.RetrofitInterface;
 import com.example.foody_android.Model.LoginResult;
+import com.example.foody_android.CallAPI.RetrofitInterface;
+import com.example.foody_android.Model.LoginResult;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -36,12 +38,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
+
+
     private static final String BASE_URL = "http://192.168.1.2:3001/";
     //private static final String BASE_URL = "http://10.0.2.2:3001/";
 
     private Button btnLogin;
 
-    private TextView gotoSignUp;
+    private TextView gotoSignUp, forgetPassword;
     private EditText inputPassword, inputEmail;
 
     private String fcmToken;
@@ -56,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         inputPassword = findViewById(R.id.password_edittext);
         btnLogin = findViewById(R.id.login_btn);
         gotoSignUp = findViewById(R.id.goto_signup_btn);
+        forgetPassword = findViewById(R.id.forget_password_btn);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -68,6 +73,10 @@ public class LoginActivity extends AppCompatActivity {
 
         gotoSignUp.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+            startActivity(intent);
+        });
+        forgetPassword.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, ForgetPassWord.class);
             startActivity(intent);
         });
         getFCMToken();
@@ -98,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     String authToken = result.getToken();
                     Log.d("AuthToken", authToken);
+                    int userId = result.getId();
 
                     // Lưu authToken và userID vào SharedPreferences
                     SharedPreferencesManager.getInstance(LoginActivity.this).saveAuthToken(authToken);

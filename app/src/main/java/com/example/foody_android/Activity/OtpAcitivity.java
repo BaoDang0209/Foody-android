@@ -15,6 +15,7 @@ import com.example.foody_android.CallAPI.RetrofitInterface;
 import com.example.foody_android.Model.LoginResult;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,6 +32,7 @@ public class OtpAcitivity extends AppCompatActivity {
 
     private TextView reSend;
     private EditText[] otpFields = new EditText[6];
+    private String forgot = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,8 @@ public class OtpAcitivity extends AppCompatActivity {
         reSend = findViewById(R.id.textResendOTP);
 
         String email = getIntent().getStringExtra("email");
+        forgot = getIntent().getStringExtra("forgot");
+
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -79,19 +83,24 @@ public class OtpAcitivity extends AppCompatActivity {
         HashMap<String, String> map = new HashMap<>();
         map.put("email", email);
         map.put("otp", otp.toString());
+        Call<LoginResult> call;
+        if(Objects.equals(forgot, "1")) {
+            call = retrofitInterface.verifyOtpforgetPass(map);
+        } else
+        {
+            call = retrofitInterface.verifyOtp(map);
 
-        Call<LoginResult> call = retrofitInterface.verifyOtp(map);
-
+        }
         call.enqueue(new Callback<LoginResult>() {
             @Override
             public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
-                if (response.code() ==200 ) {
-                    LoginResult result = response.body();
+                if (response.isSuccessful() && response.body() != null ) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(OtpAcitivity.this);
-                                // Redirect to ShipperPanelBottomNavigationActivity
+
                                 Intent intent = new Intent(OtpAcitivity.this, LoginActivity.class);
                                 startActivity(intent);
-                                finish();  // Optional: finish the current activity
+                                Toast.makeText(OtpAcitivity.this, "Successfull !! Please Login again", Toast.LENGTH_LONG).show();
+                                finish();
 
                     // Save user session here if needed
                 } else if (response.code() == 401) {

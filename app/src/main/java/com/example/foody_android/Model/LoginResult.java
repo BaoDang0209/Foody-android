@@ -18,6 +18,15 @@ public class LoginResult {
     private String password;
     private String phone_number;
 
+    private String newPassword;
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
 
     private String fullname;
 
