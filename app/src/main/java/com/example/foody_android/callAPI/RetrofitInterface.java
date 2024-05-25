@@ -31,14 +31,21 @@ public interface RetrofitInterface {
     @POST("/api/auth/signup")
     Call<LoginResult> executeSignup(@Body HashMap<String, String> map);
 
+    @POST("/api/auth/forgotPassword")
+    Call<LoginResult> executeForgetPassWord(@Body HashMap<String, String> map);
+
     @POST("/api/user/otp/verify-otp")
     Call<LoginResult> verifyOtp(@Body HashMap<String, String> map);
+
+    @POST("/api/auth/verifyOTP")
+    Call<LoginResult> verifyOtpforgetPass(@Body HashMap<String, String> map);
 
     @POST("/api/user/otp/send-otp")
     Call<LoginResult> sendOTP(@Body HashMap<String, String> map);
 
     @POST("/api/orders/addorder")
     Call<Order> addOrder(@Body HashMap<String, String> map);
+
 
     @GET("/api/auth/getUserProfile")
     Call<LoginResult> getUserProfile(@Header("Authorization") String authToken);

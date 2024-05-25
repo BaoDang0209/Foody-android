@@ -38,6 +38,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FoodDetailActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
+
     //private static final String BASE_URL = "http://192.168.1.3:3001/";
     //private static final String BASE_URL = "http://192.168.1.5:3001/";
     private static final String BASE_URL = "http://10.0.2.2:3001/";
@@ -243,7 +244,6 @@ public class FoodDetailActivity extends AppCompatActivity {
                                 Log.d("OrderProcess", "onResponse called");
                                 if (response.isSuccessful() && response.body() != null) {
                                     Order order = response.body();
-                                    Log.d("OrderProcess", "Response body: " + order.toString());
                                    // showOrderInfo(order);
                                 } else {
                                     Log.d("OrderResponse", "Response not successful: " + response.code());
@@ -282,19 +282,19 @@ public class FoodDetailActivity extends AppCompatActivity {
     }
 
 
-//    private void showOrderInfo(Order order) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("Order Details");
-//        builder.setMessage("Order ID: " + order.get() + "\n"
-//                + "Food ID: " + order.getMenuItemId() + "\n"
-//                + "Quantity: " + order.getQuality() + "\n"
-//                + "Price: " + order.getPrice() + "\n");
-//
-//        builder.setPositiveButton("OK", (dialog, which) -> {
-//            dialog.dismiss(); // Đóng dialog khi người dùng nhấn OK
-//        });
-//
-//        AlertDialog dialog = builder.create();
-//        dialog.show();
-//    }
+   /*private void showOrderInfo(Order order) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Order Details");
+        builder.setMessage("Order ID: " + order.get() + "\n"
+                + "Food ID: " + order.getMenuItemId() + "\n"
+                + "Quantity: " + order.getQuality() + "\n"
+               + "Price: " + order.getPrice() + "\n");
+
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            dialog.dismiss();
+       });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }*/
 }

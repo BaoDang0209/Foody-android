@@ -1,5 +1,6 @@
 package com.example.foody_android.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,14 +31,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserInformation extends Fragment {
     private RetrofitInterface retrofitInterface;
+
    // private static final String BASE_URL = "http://10.0.2.2:3001/";
 
     private String authToken;
 
     TextView txt_edit_info;
 
+    private ImageView backBtn;
+    private TextView logoutBtn;
 
     private EditText username, fullname, phone, email;
+
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -52,6 +58,10 @@ public class UserInformation extends Fragment {
         fullname = v.findViewById(R.id.full_name);
         phone = v.findViewById(R.id.phone);
         email = v.findViewById(R.id.email);
+
+
+
+
 
 
          //Get authToken from SharedPreferences
@@ -97,7 +107,9 @@ public class UserInformation extends Fragment {
         return v;
 
 
+
     }
+
 
     private void handleEditProfile() {
 
