@@ -2,7 +2,6 @@ package com.example.foody_android.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,9 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.foody_android.Adapter.ResFoodAdapter;
 import com.example.foody_android.R;
-import com.example.foody_android.callAPI.RetrofitInterface;
-import com.example.foody_android.model.Food;
-import java.util.ArrayList;
+import com.example.foody_android.CallAPI.RetrofitInterface;
+import com.example.foody_android.Model.Food;
+
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,7 +28,7 @@ public class ListFoodActivity extends AppCompatActivity {
 
     private boolean isSearch = false;
     private ImageView back;
-    private static final String BASE_URL = "http://192.168.1.5:3001/";
+    private static final String BASE_URL = "http://192.168.1.2:3001/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

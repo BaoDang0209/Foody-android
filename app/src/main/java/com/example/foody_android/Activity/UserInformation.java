@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,9 +16,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.foody_android.R;
-import com.example.foody_android.callAPI.RetrofitInterface;
-import com.example.foody_android.model.LoginResult;
-import com.example.foody_android.model.User;
+import com.example.foody_android.CallAPI.RetrofitInterface;
+import com.example.foody_android.Model.LoginResult;
 
 import java.util.HashMap;
 
@@ -33,6 +31,7 @@ public class UserInformation extends Fragment {
     private RetrofitInterface retrofitInterface;
 
    // private static final String BASE_URL = "http://10.0.2.2:3001/";
+   private static final String BASE_URL = "http://192.16.1.2:3001/";
 
     private String authToken;
 
