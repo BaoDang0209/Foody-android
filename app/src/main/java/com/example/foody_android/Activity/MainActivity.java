@@ -33,10 +33,11 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new HomeFragment();
                     break;
                 case R.id.menu_chat:
-                    // Add your ChatFragment code here
+                    selectedFragment = new ChatFragment();
                     break;
                 case R.id.menu_cart:
                     // Add your NotificationsFragment code here
+
                     break;
                 case R.id.menu_profile:
                     selectedFragment = new UserInformation();

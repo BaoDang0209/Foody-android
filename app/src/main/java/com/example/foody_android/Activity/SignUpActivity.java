@@ -8,8 +8,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.foody_android.R;
-import com.example.foody_android.callAPI.RetrofitInterface;
-import com.example.foody_android.model.LoginResult;
+import com.example.foody_android.CallAPI.RetrofitInterface;
+import com.example.foody_android.Model.LoginResult;
 import android.widget.EditText;
 import android.widget.Button;
 
@@ -28,7 +28,8 @@ public class SignUpActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
     //private static final String BASE_URL = "http://192.168.1.5:3001/";
-    private static final String BASE_URL = "http://10.0.2.2:3001/";
+    //private static final String BASE_URL = "http://10.0.2.2:3001/";
+    private static final String BASE_URL = "http://192.168.1.2:3001";
 
     private Button btnSignUp;
 

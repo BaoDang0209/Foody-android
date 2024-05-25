@@ -1,4 +1,4 @@
-package com.example.foody_android.model;
+package com.example.foody_android.Model;
 import java.io.Serializable;
 
 public class User implements Serializable {

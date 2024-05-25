@@ -16,10 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.foody_android.Adapter.FoodAdapter;
 import com.example.foody_android.Adapter.ResAdapter;
 import com.example.foody_android.R;
-import com.example.foody_android.model.Address;
-import com.example.foody_android.model.Food;
-import com.example.foody_android.model.Restaurant;
-import com.example.foody_android.callAPI.RetrofitInterface;
+import com.example.foody_android.Model.Address;
+import com.example.foody_android.Model.Food;
+import com.example.foody_android.Model.Restaurant;
+import com.example.foody_android.CallAPI.RetrofitInterface;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +41,7 @@ public class HomeFragment extends Fragment implements ResAdapter.OnRestaurantIte
 
     private EditText searchText;
     private ImageView searchBtn;
-    private static final String BASE_URL = "http://192.168.1.5:3001/";
+    private static final String BASE_URL = "http://192.168.1.2:3001/";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

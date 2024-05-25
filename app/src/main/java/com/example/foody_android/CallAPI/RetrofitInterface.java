@@ -1,13 +1,10 @@
-package com.example.foody_android.callAPI;
+package com.example.foody_android.CallAPI;
 
-import android.util.Log;
-
-import com.example.foody_android.model.Address;
-import com.example.foody_android.model.Food;
-import com.example.foody_android.model.LoginResult;
-import com.example.foody_android.model.Order;
-import com.example.foody_android.model.User;
-import com.example.foody_android.model.Restaurant;
+import com.example.foody_android.Model.Address;
+import com.example.foody_android.Model.Food;
+import com.example.foody_android.Model.LoginResult;
+import com.example.foody_android.Model.Order;
+import com.example.foody_android.Model.Restaurant;
 
 
 import java.util.HashMap;

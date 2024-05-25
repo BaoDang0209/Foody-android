@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.foody_android.R;
-import com.example.foody_android.model.Restaurant;
+import com.example.foody_android.Model.Restaurant;
 import java.util.List;
 
 public class ResAdapter extends RecyclerView.Adapter<ResAdapter.ResViewHolder> {

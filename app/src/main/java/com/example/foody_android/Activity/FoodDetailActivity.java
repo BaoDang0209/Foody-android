@@ -1,7 +1,5 @@
 package com.example.foody_android.Activity;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,17 +14,17 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.bumptech.glide.Glide;
 import com.example.foody_android.R;
-import com.example.foody_android.callAPI.RetrofitInterface;
-import com.example.foody_android.model.Address;
-import com.example.foody_android.model.Food;
+import com.example.foody_android.CallAPI.RetrofitInterface;
+import com.example.foody_android.Model.Address;
+import com.example.foody_android.Model.Food;
 
-import com.example.foody_android.model.LoginResult;
-import com.example.foody_android.model.Order;
+import com.example.foody_android.Model.LoginResult;
+import com.example.foody_android.Model.Order;
 
 import java.io.IOException;
 import java.util.HashMap;
 
-import com.example.foody_android.model.Restaurant;
+import com.example.foody_android.Model.Restaurant;
 
 
 import retrofit2.Call;
@@ -38,9 +36,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FoodDetailActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    //private static final String BASE_URL = "http://192.168.1.3:3001/";
+    private static final String BASE_URL = "http://192.168.1.2:3001/";
     //private static final String BASE_URL = "http://192.168.1.5:3001/";
-    private static final String BASE_URL = "http://10.0.2.2:3001/";
+    //private static final String BASE_URL = "http://10.0.2.2:3001/";
 
     private TextView foodName, description, price, quality, total, minusBtn, plusBtn, resAddress;
     private AppCompatButton orderBTN;

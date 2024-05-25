@@ -6,18 +6,15 @@ import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.arch.core.executor.ArchTaskExecutor;
 
 import com.example.foody_android.R;
-import com.example.foody_android.callAPI.RetrofitInterface;
-import com.example.foody_android.model.LoginResult;
+import com.example.foody_android.CallAPI.RetrofitInterface;
+import com.example.foody_android.Model.LoginResult;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -39,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private static final String BASE_URL = "http://192.168.1.5:3001/";
+    private static final String BASE_URL = "http://192.168.1.2:3001/";
     //private static final String BASE_URL = "http://10.0.2.2:3001/";
 
     private Button btnLogin;

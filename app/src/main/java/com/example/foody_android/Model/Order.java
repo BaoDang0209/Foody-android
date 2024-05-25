@@ -1,6 +1,4 @@
-package com.example.foody_android.model;
-
-import com.google.gson.annotations.SerializedName;
+package com.example.foody_android.Model;
 
 public class Order {
 
