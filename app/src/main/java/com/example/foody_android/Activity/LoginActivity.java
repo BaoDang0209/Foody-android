@@ -101,14 +101,11 @@ public class LoginActivity extends AppCompatActivity {
 
                     // Lưu authToken và userID vào SharedPreferences
                     SharedPreferencesManager.getInstance(LoginActivity.this).saveAuthToken(authToken);
-                    //SharedPreferencesManager.getInstance(LoginActivity.this).saveUserId(userId);
 
-
-                   // AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("userId",String.valueOf(result.getId()));
+                    startActivity(intent);
+                    finish();
 
                     // Save user session here if needed
                 } else if (response.code() == 401) {
