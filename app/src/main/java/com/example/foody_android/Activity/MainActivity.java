@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment.setArguments(args);
                     break;
                 case R.id.menu_cart:
-                    // Add your NotificationsFragment code here
 
                     break;
                 case R.id.menu_profile:

@@ -65,7 +65,7 @@ public class ChatFragment extends Fragment {
                 chatRoomList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     ChatRoom chatRoom = snapshot.getValue(ChatRoom.class);
-                    if (chatRoom != null && chatRoom.getParticipants().containsKey(user_id)) {
+                    if (chatRoom != null && chatRoom.getParticipants().containsKey("user "+user_id)) {
                         chatRoom.setId(snapshot.getKey()); // Set the ID of the chat room
                         chatRoomList.add(chatRoom);
                     }

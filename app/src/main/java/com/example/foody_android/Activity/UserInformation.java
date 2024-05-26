@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.foody_android.OrderManager;
 import com.example.foody_android.R;
 import com.example.foody_android.CallAPI.RetrofitInterface;
 import com.example.foody_android.Model.LoginResult;
@@ -57,12 +58,6 @@ public class UserInformation extends Fragment {
         fullname = v.findViewById(R.id.full_name);
         phone = v.findViewById(R.id.phone);
         email = v.findViewById(R.id.email);
-
-
-
-
-
-
          //Get authToken from SharedPreferences
         authToken = SharedPreferencesManager.getInstance(requireContext()).getAuthToken();
         Log.d("ShipperProfileFragment", "AuthToken: " + authToken);

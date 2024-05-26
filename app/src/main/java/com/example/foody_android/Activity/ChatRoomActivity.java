@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foody_android.Adapter.MessageAdapter;
 import com.example.foody_android.Model.Message;
+import com.example.foody_android.OrderManager;
 import com.example.foody_android.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -76,6 +77,7 @@ public class ChatRoomActivity extends AppCompatActivity {
                 editTextMessage.setText(""); // Clear message content after sending
             }
         });
+
     }
 
     private void sendMessage(String messageContent) {
@@ -94,7 +96,7 @@ public class ChatRoomActivity extends AppCompatActivity {
 
         Message message = new Message();
         message.setContent(messageContent);
-        message.setSenderId("user2");
+        message.setSenderId("user");
         message.setTimestamp(timestamp);
 
         // Set the message with the generated message ID

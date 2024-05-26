@@ -68,4 +68,17 @@ public class Order {
     private String from_address;
 
     private String to_address;
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", menuItemId=" + menuItemId +
+                ", quantity=" + quantity +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", receiverName='" + receiverName + '\'' +
+                ", from_address='" + from_address + '\'' +
+                ", to_address='" + to_address + '\'' +
+                '}';
+    }
 }

@@ -3,6 +3,7 @@ package com.example.foody_android.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.bumptech.glide.Glide;
+import com.example.foody_android.OrderManager;
 import com.example.foody_android.R;
 import com.example.foody_android.CallAPI.RetrofitInterface;
 import com.example.foody_android.Model.Address;
@@ -37,13 +39,11 @@ public class FoodDetailActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
 
-
-
-    private static final String BASE_URL = "http://192.168.1.8:3001/";
+    private static final String BASE_URL = "http://192.168.15.43:3001/";
 
     
     private TextView foodName, description, price, quality, total, minusBtn, plusBtn, resAddress;
-    private AppCompatButton orderBTN;
+    private AppCompatButton orderBTN,addToCard;
     private EditText userAddress, phoneNum;
 
     private ImageView backBTN;
@@ -77,6 +77,7 @@ public class FoodDetailActivity extends AppCompatActivity {
         orderBTN = findViewById(R.id.orderBtn);
         backBTN = findViewById(R.id.backBtn);
         userAddress = findViewById(R.id.userAddress);
+        addToCard=findViewById(R.id.addtocartBtn);
 
         authToken = SharedPreferencesManager.getInstance(this).getAuthToken();
 
@@ -84,9 +85,6 @@ public class FoodDetailActivity extends AppCompatActivity {
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
-
-
 
         retrofitInterface = retrofit.create(RetrofitInterface.class);
 
@@ -113,8 +111,13 @@ public class FoodDetailActivity extends AppCompatActivity {
 
         minusBtn.setOnClickListener(v -> decreaseQuantity());
         plusBtn.setOnClickListener(v -> increaseQuantity());
+        addToCard.setOnClickListener(new View.OnClickListener() {
+            // Create a new Order object
+            @Override
+            public void onClick(View v) {
 
-
+            }
+        });
 
     }
 
@@ -249,9 +252,6 @@ public class FoodDetailActivity extends AppCompatActivity {
                                    // showOrderInfo(order);
 
                                     showOrderInfo(order);
-
-
-
 
                                 } else {
                                     Log.d("OrderResponse", "Response not successful: " + response.code());

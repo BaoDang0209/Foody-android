@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foody_android.Adapter.FoodAdapter;
 import com.example.foody_android.Adapter.ResAdapter;
+import com.example.foody_android.Model.Order;
+import com.example.foody_android.OrderManager;
 import com.example.foody_android.R;
 import com.example.foody_android.Model.Address;
 import com.example.foody_android.Model.Food;
@@ -41,12 +43,11 @@ public class HomeFragment extends Fragment implements ResAdapter.OnRestaurantIte
 
     private EditText searchText;
     private ImageView searchBtn;
-    private static final String BASE_URL = "http://192.168.1.2:3001/";
+    private static final String BASE_URL = "http://192.168.15.43:3001/";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
         searchText = view.findViewById(R.id.searchtext);
         searchBtn = view.findViewById(R.id.searchBtn);
 
@@ -122,7 +123,7 @@ public class HomeFragment extends Fragment implements ResAdapter.OnRestaurantIte
 
     private void getAddressForRestaurant(int addressId, Restaurant restaurant) {
         Call<Address> call = retrofitInterface.getAddressId(addressId);
-
+        // Create and add a few Order objects
         call.enqueue(new Callback<Address>() {
             @Override
             public void onResponse(Call<Address> call, Response<Address> response) {
